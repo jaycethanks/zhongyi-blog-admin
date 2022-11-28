@@ -6,16 +6,6 @@ export default [
   },
   { path: '/home', name: '首页', icon: 'smile', component: './Home' },
   {
-    path: '/admin',
-    name: '管理页',
-    icon: 'crown',
-    access: 'canAdmin',
-    routes: [
-      { path: '/admin', redirect: '/admin/sub-page' },
-      { path: '/admin/sub-page', name: '二级管理页', component: './Admin' },
-    ],
-  },
-  {
     path: '/content',
     name: '内容管理',
     icon: 'crown',
