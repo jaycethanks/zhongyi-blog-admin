@@ -1,0 +1,35 @@
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  height: 5.334rem;
+  padding: 0 2rem;
+  border-bottom: 1px solid #ddd;
+  :global {
+    .ant-input {
+      height: 100%;
+      font-weight: 500;
+      font-size: 24px;
+    }
+  }
+
+  .btn-group {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    align-items: center;
+  }
+}
+.submit-overlay {
+  :global {
+    .ant-popover-inner-content {
+      padding: 12px 16px 0 16px;
+    }
+  }
+  .footer {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 1rem 0;
+  }
+}

@@ -29,7 +29,7 @@ const LoginMessage: React.FC<{
         marginBottom: 24,
       }}
       message={content}
-      type="error"
+      type='error'
       showIcon
     />
   );
@@ -78,17 +78,28 @@ const Login: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.content}>
         <LoginForm
-          logo={<img alt="logo" src="/logo.svg" />}
-          title="Ant Design"
+          logo={<img alt='logo' src='/logo.svg' />}
+          title='Ant Design'
           subTitle={'Ant Design 是西湖区最具影响力的 Web 设计规范'}
           initialValues={{
             autoLogin: true,
+            username: 'admin',
+            password: 'ant.design',
           }}
           actions={[
             '其他登录方式 :',
-            <AlipayCircleOutlined key="AlipayCircleOutlined" className={styles.icon} />,
-            <TaobaoCircleOutlined key="TaobaoCircleOutlined" className={styles.icon} />,
-            <WeiboCircleOutlined key="WeiboCircleOutlined" className={styles.icon} />,
+            <AlipayCircleOutlined
+              key='AlipayCircleOutlined'
+              className={styles.icon}
+            />,
+            <TaobaoCircleOutlined
+              key='TaobaoCircleOutlined'
+              className={styles.icon}
+            />,
+            <WeiboCircleOutlined
+              key='WeiboCircleOutlined'
+              className={styles.icon}
+            />,
           ]}
           onFinish={async (values) => {
             await handleSubmit(values as API.LoginParams);
@@ -116,7 +127,7 @@ const Login: React.FC = () => {
           {type === 'account' && (
             <>
               <ProFormText
-                name="username"
+                name='username'
                 fieldProps={{
                   size: 'large',
                   prefix: <UserOutlined className={styles.prefixIcon} />,
@@ -130,7 +141,7 @@ const Login: React.FC = () => {
                 ]}
               />
               <ProFormText.Password
-                name="password"
+                name='password'
                 fieldProps={{
                   size: 'large',
                   prefix: <LockOutlined className={styles.prefixIcon} />,
@@ -146,7 +157,9 @@ const Login: React.FC = () => {
             </>
           )}
 
-          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
+          {status === 'error' && loginType === 'mobile' && (
+            <LoginMessage content='验证码错误' />
+          )}
           {type === 'mobile' && (
             <>
               <ProFormText
@@ -154,7 +167,7 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <MobileOutlined className={styles.prefixIcon} />,
                 }}
-                name="mobile"
+                name='mobile'
                 placeholder={'请输入手机号！'}
                 rules={[
                   {
@@ -182,7 +195,7 @@ const Login: React.FC = () => {
                   }
                   return '获取验证码';
                 }}
-                name="captcha"
+                name='captcha'
                 rules={[
                   {
                     required: true,
@@ -206,7 +219,7 @@ const Login: React.FC = () => {
               marginBottom: 24,
             }}
           >
-            <ProFormCheckbox noStyle name="autoLogin">
+            <ProFormCheckbox noStyle name='autoLogin'>
               自动登录
             </ProFormCheckbox>
             <a
