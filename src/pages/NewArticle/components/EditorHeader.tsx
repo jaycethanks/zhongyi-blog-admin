@@ -1,14 +1,15 @@
 import styles from './EditorHeader.module.less';
 import { Input, Button, Popover, Form } from 'antd';
-console.log('[styles]: ', styles);
 const text = <span>Title</span>;
 const onFinish = () => {};
 const onFinishFailed = () => {};
 const content = () => {
+  const [form] = Form.useForm();
   const onOk = () => {
+    console.log('click');
+    form.validateFields();
     form.submit();
   };
-  const [form] = Form.useForm();
   return (
     /**
      * 分类
@@ -44,17 +45,17 @@ const content = () => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item wrapperCol={{ span: 16 }}>
+        {/* <Form.Item wrapperCol={{ span: 16 }}>
           <Button type='primary' htmlType='submit'>
             Submit
           </Button>
-        </Form.Item>
+        </Form.Item> */}
       </Form>
       <div className={styles['footer']}>
         <Button ghost type='primary'>
           取消
         </Button>
-        <Button type='primary' onClick={() => onOk}>
+        <Button type='primary' onClick={onOk}>
           确定发布
         </Button>
       </div>
