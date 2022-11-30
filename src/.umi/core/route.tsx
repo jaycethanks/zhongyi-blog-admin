@@ -21,8 +21,8 @@ export async function getRoutes() {
 '12': React.lazy(() => import(/* webpackChunkName: "p__Settings__index" */'@/pages/Settings/index.tsx')),
 '13': React.lazy(() => import( './EmptyRoute')),
 '14': React.lazy(() => import(/* webpackChunkName: "p__404" */'@/pages/404.tsx')),
-'ant-design-pro-layout': React.lazy(() => import(/* webpackChunkName: "umi__plugin-layout__Layout" */'/home/jayce/Desktop/Projects/zhongyi-blog-admin/src/.umi/plugin-layout/Layout.tsx')),
-'umi/plugin/openapi': React.lazy(() => import(/* webpackChunkName: "umi__plugin-openapi__openapi" */'/home/jayce/Desktop/Projects/zhongyi-blog-admin/src/.umi/plugin-openapi/openapi.tsx')),
+'ant-design-pro-layout': React.lazy(() => import(/* webpackChunkName: "umi__plugin-layout__Layout" */'/home/jayce/Desktop/workspace_personal/zhongyi-blog-admin/src/.umi/plugin-layout/Layout.tsx')),
+'umi/plugin/openapi': React.lazy(() => import(/* webpackChunkName: "umi__plugin-openapi__openapi" */'/home/jayce/Desktop/workspace_personal/zhongyi-blog-admin/src/.umi/plugin-openapi/openapi.tsx')),
 },
   };
 }

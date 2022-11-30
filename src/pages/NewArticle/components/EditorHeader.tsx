@@ -1,8 +1,17 @@
 import styles from './EditorHeader.module.less';
-import { Input, Button, Popover, Form } from 'antd';
-const text = <span>Title</span>;
+import { Input, Button, Popover, Form, Switch } from 'antd';
+const { TextArea } = Input;
+import FormItemAddTag from './FormItemAddTag';
+import FormItemCategory from './FormItemCategory';
+import FormItemCover from './FormItemCover';
+import FormItemCollect2Column from './FormItemCollect2Column';
+
+const text = <div className={styles['header']}>发布文章</div>;
 const onFinish = () => {};
 const onFinishFailed = () => {};
+const onChange = (checked: boolean) => {
+  console.log(`switch to ${checked}`);
+};
 const content = () => {
   const [form] = Form.useForm();
   const onOk = () => {
@@ -11,45 +20,75 @@ const content = () => {
     form.submit();
   };
   return (
-    /**
-     * 分类
-     * 标签
-     * 文章封面
-     * 收录至专栏
-     * 编辑摘要
-     */
     <>
       <Form
         form={form}
         name='basic'
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
+        labelCol={{ span: 5 }}
+        wrapperCol={{ span: 19 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete='off'
       >
         <Form.Item
-          label='Username'
-          name='username'
+          label='分类'
+          name='category'
           rules={[{ required: true, message: 'Please input your username!' }]}
         >
-          <Input />
+          <FormItemCategory />
+        </Form.Item>
+        <Form.Item
+          label='添加标签'
+          name='tags'
+          rules={[{ required: true, message: 'Please input your username!' }]}
+        >
+          <FormItemAddTag />
+        </Form.Item>
+        <Form.Item
+          label='文章封面'
+          name='cover'
+          rules={[{ required: true, message: 'Please input your username!' }]}
+        >
+          <FormItemCover />
         </Form.Item>
 
         <Form.Item
-          label='Password'
+          label='收录至专栏'
+          name='column'
+          rules={[{ required: false }]}
+        >
+          <FormItemCollect2Column />
+        </Form.Item>
+
+        <Form.Item
+          label='发布到Banner'
+          name='isbanner'
+          rules={[{ required: true, message: 'Please input your username!' }]}
+        >
+          <Switch defaultChecked onChange={onChange} />
+        </Form.Item>
+
+        <Form.Item
+          label='编辑摘要'
+          name='description'
+          rules={[{ required: true, message: 'Please input your username!' }]}
+        >
+          <TextArea
+            rows={2}
+            maxLength={100}
+            showCount
+            autoSize={{ minRows: 2, maxRows: 2 }}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label='阅读密码'
           name='password'
           rules={[{ required: true, message: 'Please input your password!' }]}
         >
           <Input.Password />
         </Form.Item>
-
-        {/* <Form.Item wrapperCol={{ span: 16 }}>
-          <Button type='primary' htmlType='submit'>
-            Submit
-          </Button>
-        </Form.Item> */}
       </Form>
       <div className={styles['footer']}>
         <Button ghost type='primary'>
