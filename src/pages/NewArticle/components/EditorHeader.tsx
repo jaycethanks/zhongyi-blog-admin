@@ -7,19 +7,20 @@ import FormItemCover from './FormItemCover';
 import FormItemCollect2Column from './FormItemCollect2Column';
 
 const text = <div className={styles['header']}>发布文章</div>;
-const onFinish = () => {
+const onFinish = (e) => {
+  console.log('[e]: ', e);
   console.log('onFinish');
 };
 const onFinishFailed = () => {
   console.log('onFinishFailed');
 };
-const onChange = (checked: boolean) => {
-  console.log(`switch to ${checked}`);
-};
+// const onChange = (checked: boolean) => {
+//   console.log(`switch to ${checked}`);
+// };
 
 const content = () => {
   const [form] = Form.useForm();
-  const onOk = () => {
+  const onSubmit = () => {
     console.log('click');
     form.validateFields();
     form.submit();
@@ -32,7 +33,7 @@ const content = () => {
         name='basic'
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 19 }}
-        initialValues={{ remember: true }}
+        initialValues={{ category: 'c', isbanner: false, tags: 'default tag' }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete='off'
@@ -40,7 +41,7 @@ const content = () => {
         <Form.Item
           label='分类'
           name='category'
-          rules={[{ required: true, message: 'Please input your username!' }]}
+          rules={[{ required: true, message: '分类未选择' }]}
         >
           <FormItemCategory />
         </Form.Item>
@@ -51,11 +52,7 @@ const content = () => {
         >
           <FormItemAddTag />
         </Form.Item>
-        <Form.Item
-          label='文章封面'
-          name='cover'
-          rules={[{ required: true, message: 'Please input your username!' }]}
-        >
+        <Form.Item label='文章封面' name='cover' rules={[{ required: false }]}>
           <FormItemCover />
         </Form.Item>
 
@@ -70,15 +67,16 @@ const content = () => {
         <Form.Item
           label='发布到Banner'
           name='isbanner'
-          rules={[{ required: true, message: 'Please input your username!' }]}
+          valuePropName='checked'
+          rules={[{ required: false }]}
         >
-          <Switch defaultChecked onChange={onChange} />
+          <Switch />
         </Form.Item>
 
         <Form.Item
           label='编辑摘要'
           name='description'
-          rules={[{ required: true, message: 'Please input your username!' }]}
+          rules={[{ required: true, message: '未填写文章摘要' }]}
         >
           <TextArea
             rows={2}
@@ -91,7 +89,7 @@ const content = () => {
         <Form.Item
           label='阅读密码'
           name='password'
-          rules={[{ required: true, message: 'Please input your password!' }]}
+          rules={[{ required: false }]}
         >
           <Input.Password />
         </Form.Item>
@@ -100,7 +98,7 @@ const content = () => {
         <Button ghost type='primary'>
           取消
         </Button>
-        <Button type='primary' onClick={onOk}>
+        <Button type='primary' onClick={onSubmit}>
           确定发布
         </Button>
       </div>

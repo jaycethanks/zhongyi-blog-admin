@@ -7,7 +7,8 @@ interface CategoryProps {
   value?: string;
   onChange?: (value: string) => void;
 }
-const App: React.FC<CategoryProps> = ({ value = {}, onChange }) => {
+const App: React.FC<CategoryProps> = ({ value, onChange }) => {
+  console.log('[value]: ', value);
   const handleOnChange = (e: RadioChangeEvent) => {
     onChange?.(e.target.value);
     console.log(`radio checked:${e.target.value}`);
@@ -15,8 +16,8 @@ const App: React.FC<CategoryProps> = ({ value = {}, onChange }) => {
   return (
     <>
       <Radio.Group
+        defaultValue={value}
         onChange={handleOnChange}
-        defaultValue='a'
         className={styles['radio-group']}
       >
         <Radio.Button value='a'>Hangzhou</Radio.Button>
