@@ -7,17 +7,23 @@ import FormItemCover from './FormItemCover';
 import FormItemCollect2Column from './FormItemCollect2Column';
 
 const text = <div className={styles['header']}>发布文章</div>;
-const onFinish = () => {};
-const onFinishFailed = () => {};
+const onFinish = () => {
+  console.log('onFinish');
+};
+const onFinishFailed = () => {
+  console.log('onFinishFailed');
+};
 const onChange = (checked: boolean) => {
   console.log(`switch to ${checked}`);
 };
+
 const content = () => {
   const [form] = Form.useForm();
   const onOk = () => {
     console.log('click');
     form.validateFields();
     form.submit();
+    window.fff = form;
   };
   return (
     <>

@@ -4,10 +4,11 @@ export default [
     layout: false,
     routes: [{ name: '登录', path: '/user/login', component: './User/Login' }],
   },
-  { path: '/home', name: '首页', icon: 'smile', component: './Home' },
+  { path: '/home', name: '首页', icon: 'homeOutlined', component: './Home' },
   {
     path: '/new-article',
     name: '新增文章',
+    icon: 'editOutlined',
     redirect: '/new-article/add',
   },
   {
@@ -18,12 +19,23 @@ export default [
   {
     path: '/content',
     name: '内容管理',
-    icon: 'crown',
+    icon: 'blockOutlined',
     access: 'canAdmin',
     routes: [
       { path: '/content', redirect: '/content/article' },
 
-      { path: '/content/article', name: '文章管理', component: './Content' },
+      {
+        path: '/content/article',
+        name: '文章管理',
+        component: './Content',
+      },
+      {
+        path: '/content/category',
+        name: '标签管理',
+        icon: 'crown',
+        component: './Content/Category',
+      },
+      { path: '/content/tags', name: '分类管理', component: './Content/Tags' },
       {
         path: '/content/column',
         name: '专栏管理',
@@ -34,7 +46,7 @@ export default [
   {
     path: '/settings',
     name: '设置中心',
-    icon: 'crown',
+    icon: 'settingOutlined',
     access: 'canAdmin',
     routes: [
       { path: '/settings', redirect: '/settings/basic' },
