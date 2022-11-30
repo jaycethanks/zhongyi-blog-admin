@@ -5,10 +5,13 @@ import FormItemAddTag from './FormItemAddTag';
 import FormItemCategory from './FormItemCategory';
 import FormItemCover from './FormItemCover';
 import FormItemCollect2Column from './FormItemCollect2Column';
+import { useState } from 'react';
 
 const text = <div className={styles['header']}>发布文章</div>;
-const onFinish = (e) => {
-  console.log('[e]: ', e);
+const onFinish = (values: any, { title, mainContent }: popupContentProps) => {
+  console.log('[values]: ', values);
+  console.log('[title]: ', title);
+  console.log('[mainContent]: ', mainContent);
   console.log('onFinish');
 };
 const onFinishFailed = () => {
@@ -18,7 +21,11 @@ const onFinishFailed = () => {
 //   console.log(`switch to ${checked}`);
 // };
 
-const content = () => {
+interface popupContentProps {
+  title: string;
+  mainContent: string;
+}
+const content = ({ title, mainContent }: popupContentProps) => {
   const [form] = Form.useForm();
   const onSubmit = () => {
     console.log('click');
@@ -34,7 +41,7 @@ const content = () => {
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 19 }}
         initialValues={{ category: 'c', isbanner: false, tags: 'default tag' }}
-        onFinish={onFinish}
+        onFinish={(values) => onFinish(values, { title, mainContent })}
         onFinishFailed={onFinishFailed}
         autoComplete='off'
       >
@@ -105,10 +112,20 @@ const content = () => {
     </>
   );
 };
-export default () => {
+
+interface EditorHeaderProps {
+  mainContent: string;
+}
+const EditorHeader: React.FC<EditorHeaderProps> = ({ mainContent }) => {
+  const [title, setTitle] = useState('');
   return (
     <header className={styles['editor-header']}>
-      <Input bordered={false} placeholder='起一个响亮的标题吧' />
+      <Input
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        bordered={false}
+        placeholder='起一个响亮的标题吧'
+      />
       <div className={styles['btn-group']}>
         <Button ghost type='primary'>
           草稿箱
@@ -117,7 +134,7 @@ export default () => {
           placement='bottomRight'
           title={text}
           open
-          content={content}
+          content={content({ title: title, mainContent: mainContent })}
           trigger='click'
           overlayClassName={styles['submit-overlay']}
         >
@@ -127,3 +144,5 @@ export default () => {
     </header>
   );
 };
+
+export default EditorHeader;

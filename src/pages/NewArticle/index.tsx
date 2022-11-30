@@ -14,7 +14,7 @@ export default () => {
 
   return (
     <>
-      <EditorHeader />
+      <EditorHeader mainContent={value} />
       <div className={styles.main}>
         <Editor
           value={value}
