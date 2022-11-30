@@ -1,2 +1,27 @@
 .form-item-cover {
+  :global {
+    .ant-upload-btn {
+      padding: 0 !important;
+    }
+  }
+  .upload-wrapper {
+    height: 10rem;
+    padding: 2rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    .top-level-desc {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #fff;
+      background-color: hsl(0deg 0% 100% / 50%);
+      backdrop-filter: contrast(0.4);
+    }
+  }
 }

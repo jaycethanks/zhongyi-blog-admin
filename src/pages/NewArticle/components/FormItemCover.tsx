@@ -1,8 +1,19 @@
 import styles from './FormItemCover.module.less';
 import React from 'react';
 import { InboxOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd';
+// import type { UploadProps } from 'antd';
 import { message, Upload } from 'antd';
+import { useState } from 'react';
+import type { RcFile, UploadProps } from 'antd/es/upload';
+import type { UploadFile } from 'antd/es/upload/interface';
+
+const getBase64 = (file: RcFile): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
 
 const { Dragger } = Upload;
 
@@ -11,6 +22,15 @@ interface CoverProps {
   onChange?: (value: string) => void;
 }
 const App: React.FC<CoverProps> = ({ value, onChange }) => {
+  const [previewImage, setPreviewImage] = useState('');
+
+  const handlePreview = async (file: UploadFile) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj as RcFile);
+    }
+    setPreviewImage(file.url || (file.preview as string));
+  };
+
   const props: UploadProps = {
     name: 'file',
     multiple: false,
@@ -22,6 +42,7 @@ const App: React.FC<CoverProps> = ({ value, onChange }) => {
       }
       if (status === 'done') {
         const { response } = info.file;
+        handlePreview(info.file);
         onChange?.(response);
         message.success(`${info.file.name} file uploaded successfully.`);
       } else if (status === 'error') {
@@ -35,11 +56,19 @@ const App: React.FC<CoverProps> = ({ value, onChange }) => {
 
   return (
     <Dragger {...props} className={styles['form-item-cover']}>
-      <p className='ant-upload-drag-icon'>
-        <InboxOutlined />
-      </p>
-      <p className='ant-upload-text'>上传封面</p>
-      <p className='ant-upload-hint'>建议尺寸: 1303*734px</p>
+      <div
+        className={styles['upload-wrapper']}
+        style={{ backgroundImage: `url(${previewImage})` }}
+      >
+        <div className={styles['top-level-desc']}>
+          <p style={{ fontSize: '2.5rem' }}>
+            <InboxOutlined color='#fff' />
+          </p>
+          <p style={{ fontSize: '1.6rem', fontWeight: 500 }}>上传封面</p>
+          <p style={{ fontSize: '0.8rem' }}>建议尺寸: 1303*734px</p>
+        </div>
+        {/* <img src={previewImage} alt='' className={styles['bt-preview']} /> */}
+      </div>
     </Dragger>
   );
 };
