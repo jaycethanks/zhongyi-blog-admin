@@ -5,16 +5,7 @@ import styles from './index.module.less';
 import NewColumnModal from './newColumnModal/index';
 import ColumnMainArea from './ColumnMainArea';
 import { useState } from 'react';
-const RightOperation = () => {
-  const [open, setOpen] = useState(false);
-
-  const onFinish = (values: any) => {
-    console.log('[values]: ', values);
-    console.log('onFinish');
-  };
-  const onModalClose = () => {
-    setOpen(false);
-  };
+const RightOperation: React.FC<{ setOpen: () => void }> = ({ setOpen }) => {
   return (
     <>
       <div className={styles['right-operation']}>
@@ -26,24 +17,43 @@ const RightOperation = () => {
           新建专栏
         </Button>
       </div>
-      <NewColumnModal
-        open={open}
-        onFinish={onFinish}
-        onModalClose={onModalClose}
-      />
     </>
   );
 };
 
 const PageTabs: React.FC = () => {
   const items = [
-    { label: '专栏(9)', key: 'essays', children: <ColumnMainArea /> }, // remember to pass the key prop
+    {
+      label: '专栏(9)',
+      key: 'essays',
+      children: <ColumnMainArea />,
+    }, // remember to pass the key prop
   ];
+
+  const [open, setOpen] = useState(false);
+  const handleEdit = () => {
+    setOpen(false);
+  };
+  const onFinish = (values: any) => {
+    console.log('[values]: ', values);
+    console.log('onFinish');
+  };
+  const onModalClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Tabs
-      tabBarExtraContent={<RightOperation></RightOperation>}
-      items={items}
-    />
+    <>
+      <Tabs
+        tabBarExtraContent={<RightOperation setOpen={setOpen} />}
+        items={items}
+      />
+      <NewColumnModal
+        open={open}
+        onFinish={onFinish}
+        onModalClose={onModalClose}
+      />
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Form, Input } from 'antd';
+import { Modal, Form, Input, Switch } from 'antd';
 const { TextArea } = Input;
 import type { FormInstance } from 'antd/es/form';
 import FormItemUpload from '@/components/FormItemUpload';
@@ -51,7 +51,7 @@ const NewColumnModal: React.FC<NewColumnModalProps> = ({
         >
           <Form.Item
             label='专栏名称'
-            name='password'
+            name='name'
             rules={[{ required: true, message: '专栏名称未填写' }]}
           >
             <Input />
@@ -76,6 +76,14 @@ const NewColumnModal: React.FC<NewColumnModalProps> = ({
             rules={[{ required: false }]}
           >
             <FormItemUpload />
+          </Form.Item>
+          <Form.Item
+            label='是否可见'
+            name='visible'
+            valuePropName='checked'
+            rules={[{ required: false }]}
+          >
+            <Switch />
           </Form.Item>
         </Form>
       </Modal>

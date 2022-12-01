@@ -7,6 +7,7 @@ declare namespace API {
     description?: string;
     colid?: string;
     cover?: string;
+    visible: boolean;
   };
   type Columns = Column[];
 }
