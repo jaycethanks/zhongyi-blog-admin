@@ -60,7 +60,11 @@ export const layout: RunTimeLayoutConfig = ({
   return {
     rightContentRender: () => <RightContent settingHandler={settingHandler} />,
     waterMarkProps: {
-      content: initialState?.currentUser?.name,
+      /**
+       * ! 去处水印
+       * ! @jayce
+       */
+      // content: initialState?.currentUser?.name,
     },
     // footerRender: () => <Footer />,
     onPageChange: () => {

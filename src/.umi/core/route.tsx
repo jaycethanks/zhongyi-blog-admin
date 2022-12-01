@@ -14,7 +14,7 @@ export async function getRoutes() {
 '5': React.lazy(() => import(/* webpackChunkName: "p__NewArticle__index" */'@/pages/NewArticle/index.tsx')),
 '6': React.lazy(() => import( './EmptyRoute')),
 '7': React.lazy(() => import( './EmptyRoute')),
-'8': React.lazy(() => import(/* webpackChunkName: "p__Content__index" */'@/pages/Content/index.tsx')),
+'8': React.lazy(() => import(/* webpackChunkName: "p__Content__Article__index" */'@/pages/Content/Article/index.tsx')),
 '9': React.lazy(() => import(/* webpackChunkName: "p__Content__Category__index" */'@/pages/Content/Category/index.tsx')),
 '10': React.lazy(() => import(/* webpackChunkName: "p__Content__Tags__index" */'@/pages/Content/Tags/index.tsx')),
 '11': React.lazy(() => import(/* webpackChunkName: "p__Content__Column__index" */'@/pages/Content/Column/index.tsx')),
@@ -23,8 +23,8 @@ export async function getRoutes() {
 '14': React.lazy(() => import(/* webpackChunkName: "p__Settings__index" */'@/pages/Settings/index.tsx')),
 '15': React.lazy(() => import( './EmptyRoute')),
 '16': React.lazy(() => import(/* webpackChunkName: "p__404" */'@/pages/404.tsx')),
-'ant-design-pro-layout': React.lazy(() => import(/* webpackChunkName: "umi__plugin-layout__Layout" */'/home/jayce/Desktop/Projects/zhongyi-blog-admin/src/.umi/plugin-layout/Layout.tsx')),
-'umi/plugin/openapi': React.lazy(() => import(/* webpackChunkName: "umi__plugin-openapi__openapi" */'/home/jayce/Desktop/Projects/zhongyi-blog-admin/src/.umi/plugin-openapi/openapi.tsx')),
+'ant-design-pro-layout': React.lazy(() => import(/* webpackChunkName: "umi__plugin-layout__Layout" */'/home/jayce/Desktop/workspace_personal/zhongyi-blog-admin/src/.umi/plugin-layout/Layout.tsx')),
+'umi/plugin/openapi': React.lazy(() => import(/* webpackChunkName: "umi__plugin-openapi__openapi" */'/home/jayce/Desktop/workspace_personal/zhongyi-blog-admin/src/.umi/plugin-openapi/openapi.tsx')),
 },
   };
 }

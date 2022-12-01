@@ -1,4 +1,4 @@
-import styles from './FormItemCover.module.less';
+import styles from './index.module.less';
 import React from 'react';
 import { InboxOutlined } from '@ant-design/icons';
 // import type { UploadProps } from 'antd';

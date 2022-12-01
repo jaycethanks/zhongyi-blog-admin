@@ -27,7 +27,7 @@ export default [
       {
         path: '/content/article',
         name: '文章管理',
-        component: './Content',
+        component: './Content/Article',
       },
       {
         path: '/content/category',

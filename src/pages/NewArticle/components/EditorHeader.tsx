@@ -3,7 +3,7 @@ import { Input, Button, Popover, Form, Switch } from 'antd';
 const { TextArea } = Input;
 import FormItemAddTag from './FormItemAddTag';
 import FormItemCategory from './FormItemCategory';
-import FormItemCover from './FormItemCover';
+import FormItemUpload from '@/components/FormItemUpload';
 import FormItemCollect2Column from './FormItemCollect2Column';
 import { useState } from 'react';
 
@@ -60,7 +60,7 @@ const content = ({ title, mainContent }: popupContentProps) => {
           <FormItemAddTag />
         </Form.Item>
         <Form.Item label='文章封面' name='cover' rules={[{ required: false }]}>
-          <FormItemCover />
+          <FormItemUpload />
         </Form.Item>
 
         <Form.Item
@@ -131,9 +131,9 @@ const EditorHeader: React.FC<EditorHeaderProps> = ({ mainContent }) => {
           草稿箱
         </Button>
         <Popover
+          transitionName=''
           placement='bottomRight'
           title={text}
-          open
           content={content({ title: title, mainContent: mainContent })}
           trigger='click'
           overlayClassName={styles['submit-overlay']}
