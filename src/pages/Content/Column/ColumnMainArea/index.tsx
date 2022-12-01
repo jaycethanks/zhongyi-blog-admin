@@ -1,30 +1,31 @@
+// TODO: BugFix for Render
+import { Avatar, List, Tag } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { useRequest } from 'umi';
-import { getColumns } from '@/services/api/contentManage';
-import { List, Avatar, Tag } from 'antd';
-import { useState, useEffect } from 'react';
-import React from 'react';
-interface DataType {
-  colid: string;
-  cover?: string;
-  name: string;
-  description?: string;
-  visible: boolean;
-}
 
-interface handleEditProp {
-  handleEdit: () => void;
-}
+import { getColumns } from '@/services/api/contentManage';
 
 const ColumnMainArea: React.FC<{
-  dataSrouce?: API.Columns;
-
-  // handleEdit: handleEditProp;
-}> = ({ dataSrouce }) => {
-  // }> = ({ dataSrouce, handleEdit }) => {
+  handleEdit: (columnRecord: API.Column) => void;
+}> = ({ handleEdit }) => {
   const [list, setList] = useState<API.Columns>([]);
+  const { data, error, loading } = useRequest(() => {
+    return getColumns();
+  });
+
   useEffect(() => {
-    dataSrouce && setList(dataSrouce);
+    if (data) {
+      setList(data);
+    }
   }, []);
+
+  if (loading) {
+    return <div>loading...</div>;
+  }
+  if (error) {
+    return <div>{error.message}</div>;
+  }
+
   return (
     <List
       className='demo-loadmore-list'
@@ -33,8 +34,7 @@ const ColumnMainArea: React.FC<{
       renderItem={(item) => (
         <List.Item
           actions={[
-            <a key='list-loadmore-edit'>
-              {/* <a key='list-loadmore-edit' onClick={() => handleEdit}> */}
+            <a key='list-loadmore-edit' onClick={() => handleEdit(item)}>
               edit
             </a>,
           ]}
@@ -56,18 +56,4 @@ const ColumnMainArea: React.FC<{
     />
   );
 };
-
-export default (handleEdit: handleEditProp) => {
-  const { data, error, loading } = useRequest(() => {
-    return getColumns();
-  });
-  console.log('[data]: ', data);
-  if (loading) {
-    return <div>loading...</div>;
-  }
-  if (error) {
-    return <div>{error.message}</div>;
-  }
-  return <ColumnMainArea dataSrouce={data} />;
-  // return <ColumnMainArea dataSrouce={data} handleEdit={handleEdit} />;
-};
+export default ColumnMainArea;

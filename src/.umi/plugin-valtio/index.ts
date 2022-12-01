@@ -8,4 +8,4 @@ export {
   proxyWithDevtools,
   proxyMap,
   proxySet,
-} from '/home/jayce/Desktop/workspace_personal/zhongyi-blog-admin/node_modules/@umijs/valtio';
+} from '/home/jayce/Desktop/Projects/zhongyi-blog-admin/node_modules/@umijs/valtio';

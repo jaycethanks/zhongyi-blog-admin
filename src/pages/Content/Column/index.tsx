@@ -1,11 +1,13 @@
-import { Button, Input, Card, Tabs } from 'antd';
-import React from 'react';
+import { Button, Card, Input, Tabs } from 'antd';
+import React, { useState } from 'react';
+
 import { SearchOutlined } from '@ant-design/icons';
-import styles from './index.module.less';
-import NewColumnModal from './newColumnModal/index';
+
 import ColumnMainArea from './ColumnMainArea';
-import { useState } from 'react';
-const RightOperation: React.FC<{ setOpen: () => void }> = ({ setOpen }) => {
+import styles from './index.module.less';
+import NewColumnModal from './NewColumnModal/index';
+
+const RightOperation: React.FC<{ handleAdd: () => void }> = ({ handleAdd }) => {
   return (
     <>
       <div className={styles['right-operation']}>
@@ -13,7 +15,7 @@ const RightOperation: React.FC<{ setOpen: () => void }> = ({ setOpen }) => {
           suffix={<SearchOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
           placeholder='输入搜索内容'
         />
-        <Button type='primary' onClick={() => setOpen(true)}>
+        <Button type='primary' onClick={() => handleAdd()}>
           新建专栏
         </Button>
       </div>
@@ -22,36 +24,46 @@ const RightOperation: React.FC<{ setOpen: () => void }> = ({ setOpen }) => {
 };
 
 const PageTabs: React.FC = () => {
-  const items = [
-    {
-      label: '专栏(9)',
-      key: 'essays',
-      children: <ColumnMainArea />,
-    }, // remember to pass the key prop
-  ];
-
   const [open, setOpen] = useState(false);
-  const handleEdit = () => {
-    setOpen(false);
+  const [type, setType] = useState<'add' | 'edit'>('add');
+  const [initialValues, setInitialValues] = useState();
+  const handleEdit = (columnRecord: API.Column) => {
+    // TODO: BugFix
+    console.log('[columnRecord]: ', columnRecord);
+    if (columnRecord) {
+      setInitialValues(columnRecord);
+    }
+    setType('edit');
+    setOpen(true);
   };
-  const onFinish = (values: any) => {
+  const handleAdd = () => {
+    setType('add');
+    setOpen(true);
+  };
+
+  const onValidateFinish = (values: any) => {
     console.log('[values]: ', values);
     console.log('onFinish');
-  };
-  const onModalClose = () => {
-    setOpen(false);
   };
 
   return (
     <>
       <Tabs
-        tabBarExtraContent={<RightOperation setOpen={setOpen} />}
-        items={items}
+        tabBarExtraContent={<RightOperation handleAdd={handleAdd} />}
+        items={[
+          {
+            label: '专栏(9)',
+            key: 'essays',
+            children: <ColumnMainArea handleEdit={handleEdit} />,
+          }, // remember to pass the key prop
+        ]}
       />
       <NewColumnModal
         open={open}
-        onFinish={onFinish}
-        onModalClose={onModalClose}
+        type={type}
+        initialValues={initialValues}
+        onValidateFinish={onValidateFinish}
+        onModalClose={() => setOpen(false)}
       />
     </>
   );
