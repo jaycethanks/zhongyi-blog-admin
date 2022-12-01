@@ -31,11 +31,11 @@ export default [
       },
       {
         path: '/content/category',
-        name: '标签管理',
+        name: '分类管理',
         icon: 'crown',
         component: './Content/Category',
       },
-      { path: '/content/tags', name: '分类管理', component: './Content/Tags' },
+      { path: '/content/tags', name: '标签管理', component: './Content/Tags' },
       {
         path: '/content/column',
         name: '专栏管理',

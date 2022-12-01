@@ -4,7 +4,6 @@ import { SearchOutlined } from '@ant-design/icons';
 import styles from './index.module.less';
 import NewColumnModal from './newColumnModal/index';
 import { useState } from 'react';
-import type { FormInstance } from 'antd/es/form';
 const RightOperation = () => {
   const [open, setOpen] = useState(false);
 
