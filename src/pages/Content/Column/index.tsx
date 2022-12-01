@@ -3,6 +3,7 @@ import React from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import styles from './index.module.less';
 import NewColumnModal from './newColumnModal/index';
+import ColumnMainArea from './ColumnMainArea';
 import { useState } from 'react';
 const RightOperation = () => {
   const [open, setOpen] = useState(false);
@@ -36,7 +37,7 @@ const RightOperation = () => {
 
 const PageTabs: React.FC = () => {
   const items = [
-    { label: '专栏(9)', key: 'essays', children: '' }, // remember to pass the key prop
+    { label: '专栏(9)', key: 'essays', children: <ColumnMainArea /> }, // remember to pass the key prop
   ];
   return (
     <Tabs

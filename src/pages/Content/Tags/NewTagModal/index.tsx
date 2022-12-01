@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal, Form, Input, Switch } from 'antd';
-const { TextArea } = Input;
 import type { FormInstance } from 'antd/es/form';
 
 interface NewTagModalProps {
