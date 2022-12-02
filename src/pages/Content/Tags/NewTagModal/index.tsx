@@ -1,21 +1,35 @@
-import React from 'react';
-import { Modal, Form, Input, Switch } from 'antd';
+import { Form, Input, Modal, Switch } from 'antd';
+import React, { useEffect } from 'react';
+
 import type { FormInstance } from 'antd/es/form';
 
-interface NewTagModalProps {
+interface NewColumnModalProps {
   open: boolean;
-  onFinish: (values: any) => void;
-  onModalClose: () => void;
+  type: 'add' | 'edit';
+  onValidateFinish: (values: any) => void;
+  onModalClose: any;
+  initialValues?: API.Tag;
 }
-const NewTagModal: React.FC<NewTagModalProps> = ({
+
+const NewTagModal: React.FC<NewColumnModalProps> = ({
+  type,
   open,
-  onFinish,
+  onValidateFinish,
   onModalClose,
+  initialValues,
 }) => {
   const [form] = Form.useForm();
-
+  useEffect(() => {
+    // 值的回显
+    console.log('[initialValues]: ', initialValues);
+    if (initialValues === undefined) {
+      form.resetFields();
+    } else {
+      form.setFieldsValue(initialValues);
+    }
+  }, [initialValues]);
   const onFinishFailed = () => {
-    console.log('onFinishFailed');
+    console.warn('modal validate failed');
   };
   const onModalOk = (form: FormInstance) => {
     form.validateFields();
@@ -26,9 +40,10 @@ const NewTagModal: React.FC<NewTagModalProps> = ({
       <Modal
         transitionName=''
         maskTransitionName=''
-        title='新增标签'
+        title={type === 'add' ? '新建标签' : '编辑标签'}
         centered
         open={open}
+        okText={type === 'add' ? '确定' : '更新'}
         onOk={() => onModalOk(form)}
         onCancel={() => onModalClose()}
         width={'40rem'}
@@ -38,12 +53,7 @@ const NewTagModal: React.FC<NewTagModalProps> = ({
           name='basic'
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 20 }}
-          initialValues={{
-            category: 'c',
-            isbanner: false,
-            tags: 'default tag',
-          }}
-          onFinish={(values) => onFinish(values)}
+          onFinish={(values) => onValidateFinish(values)}
           onFinishFailed={onFinishFailed}
           autoComplete='off'
         >

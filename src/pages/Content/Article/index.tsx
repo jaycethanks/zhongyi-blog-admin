@@ -1,12 +1,18 @@
-import { Input, Card, Tabs } from 'antd';
-import Essays from './Essays';
-import Drafts from './Drafts';
-import { SearchOutlined } from '@ant-design/icons';
+import { Card, Input, Tabs } from 'antd';
 import React from 'react';
+
+import { SearchOutlined } from '@ant-design/icons';
+
+import Drafts from './Drafts';
+import Essays from './Essays';
 
 const PageTabs: React.FC = () => {
   const items = [
-    { label: '文章(999)', key: 'essays', children: <Essays /> }, // remember to pass the key prop
+    {
+      label: '文章(999)',
+      key: 'essays',
+      children: <Essays />,
+    }, // remember to pass the key prop
     { label: '草稿箱(66)', key: 'drafts', children: <Drafts /> },
   ];
   return (

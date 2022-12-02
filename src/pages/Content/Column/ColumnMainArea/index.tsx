@@ -1,23 +1,24 @@
-// TODO: BugFix for Render
-import { Avatar, List, Tag } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { List } from 'antd';
+import React from 'react';
 import { useRequest } from 'umi';
 
 import { getColumns } from '@/services/api/contentManage';
 
+import styles from './index.module.less';
+
 const ColumnMainArea: React.FC<{
   handleEdit: (columnRecord: API.Column) => void;
 }> = ({ handleEdit }) => {
-  const [list, setList] = useState<API.Columns>([]);
+  // const [list, setList] = useState<API.Columns>([]);
   const { data, error, loading } = useRequest(() => {
     return getColumns();
   });
 
-  useEffect(() => {
-    if (data) {
-      setList(data);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (data) {
+  //     setList(data);
+  //   }
+  // }, [data]);
 
   if (loading) {
     return <div>loading...</div>;
@@ -30,27 +31,49 @@ const ColumnMainArea: React.FC<{
     <List
       className='demo-loadmore-list'
       itemLayout='horizontal'
-      dataSource={list}
+      dataSource={data}
       renderItem={(item) => (
         <List.Item
           actions={[
-            <a key='list-loadmore-edit' onClick={() => handleEdit(item)}>
-              edit
+            <a key='list-item-edit' onClick={() => handleEdit(item)}>
+              编辑
             </a>,
+            [<a key='list-item-delete'>删除</a>],
           ]}
         >
           <List.Item.Meta
-            avatar={<Avatar src={item.cover} />}
-            title={<a href='https://ant.design'>{item.name}</a>}
+            avatar={
+              item.cover ? (
+                <div
+                  className={styles['cover']}
+                  style={{ backgroundImage: `url(${item.cover})` }}
+                ></div>
+              ) : (
+                <div
+                  className={styles['cover-holder']}
+                  style={{
+                    height: '6rem',
+                    width: '12rem',
+                  }}
+                >
+                  {item.name}
+                </div>
+              )
+            }
+            title={
+              <a
+                style={{ fontWeight: 600, fontSize: '1.1rem' }}
+                href='https://ant.design'
+              >
+                {item.name}
+              </a>
+            }
             description={item.description}
           />
           {/* <div>content</div> */}
-
-          {item.visible ? (
-            <Tag color='processing'>可见</Tag>
-          ) : (
-            <Tag color='error'>不可见</Tag>
-          )}
+          <span style={{ width: '4rem', textAlign: 'start' }}>
+            {item.visible ? '可见' : '不可见'}
+          </span>
         </List.Item>
       )}
     />

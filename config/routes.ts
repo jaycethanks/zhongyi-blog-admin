@@ -6,13 +6,18 @@ export default [
   },
   { path: '/home', name: '首页', icon: 'homeOutlined', component: './Home' },
   {
-    path: '/new-article',
+    path: '/editor/drafts',
     name: '新增文章',
     icon: 'editOutlined',
-    redirect: '/new-article/add',
+    redirect: '/editor/drafts/new',
   },
   {
-    path: '/new-article/add',
+    path: '/editor/drafts/new',
+    layout: false,
+    component: './NewArticle',
+  },
+  {
+    path: '/editor/drafts/edit/:artid',
     layout: false,
     component: './NewArticle',
   },

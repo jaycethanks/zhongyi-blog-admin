@@ -1,43 +1,55 @@
 import { Button, Card, Tabs } from 'antd';
-import React from 'react';
-import styles from './index.module.less';
-import NewCateModal from './NewCateModal/index';
-import { useState } from 'react';
-const RightOperation = () => {
-  const [open, setOpen] = useState(false);
+import React, { useState } from 'react';
 
-  const onFinish = (values: any) => {
+import CategoryMainArea from './CategoryMainArea';
+import NewCategoryModal from './NewCategoryModal/index';
+
+const PageTabs: React.FC = () => {
+  const [open, setOpen] = useState(false);
+  const [type, setType] = useState<'add' | 'edit'>('add');
+  const [initialValues, setInitialValues] = useState<API.Category>();
+  const handleEdit = (tagRecord: API.Category) => {
+    if (tagRecord) {
+      setInitialValues(tagRecord);
+    }
+    setType('edit');
+    setOpen(true);
+  };
+  const handleAdd = () => {
+    setInitialValues(undefined);
+    setType('add');
+    setOpen(true);
+  };
+
+  const onValidateFinish = (values: any) => {
     console.log('[values]: ', values);
     console.log('onFinish');
   };
-  const onModalClose = () => {
-    setOpen(false);
-  };
+
   return (
     <>
-      <div className={styles['right-operation']}>
-        <Button type='primary' onClick={() => setOpen(true)}>
-          新建分类
-        </Button>
-      </div>
-      <NewCateModal
+      <Tabs
+        tabBarExtraContent={
+          <Button type='primary' onClick={() => handleAdd()}>
+            新建分类
+          </Button>
+        }
+        items={[
+          {
+            label: '分类(9)',
+            key: 'category',
+            children: <CategoryMainArea handleEdit={handleEdit} />,
+          }, // remember to pass the key prop
+        ]}
+      />
+      <NewCategoryModal
         open={open}
-        onFinish={onFinish}
-        onModalClose={onModalClose}
+        type={type}
+        initialValues={initialValues}
+        onValidateFinish={onValidateFinish}
+        onModalClose={() => setOpen(false)}
       />
     </>
-  );
-};
-
-const PageTabs: React.FC = () => {
-  const items = [
-    { label: '分类(9)', key: 'category', children: '' }, // remember to pass the key prop
-  ];
-  return (
-    <Tabs
-      tabBarExtraContent={<RightOperation></RightOperation>}
-      items={items}
-    />
   );
 };
 

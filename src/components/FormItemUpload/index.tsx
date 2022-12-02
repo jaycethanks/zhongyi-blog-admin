@@ -1,12 +1,13 @@
-import styles from './index.module.less';
-import React from 'react';
-import { InboxOutlined } from '@ant-design/icons';
 // import type { UploadProps } from 'antd';
 import { message, Upload } from 'antd';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { InboxOutlined } from '@ant-design/icons';
+
+import styles from './index.module.less';
+
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
-
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -22,7 +23,12 @@ interface CoverProps {
   onChange?: (value: string) => void;
 }
 const App: React.FC<CoverProps> = ({ value, onChange }) => {
-  const [previewImage, setPreviewImage] = useState('');
+  const [previewImage, setPreviewImage] = useState<string>();
+
+  useEffect(() => {
+    // 图片的回显
+    setPreviewImage(value);
+  }, [value]);
 
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {

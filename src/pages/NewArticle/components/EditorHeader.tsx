@@ -1,14 +1,24 @@
-import styles from './EditorHeader.module.less';
-import { Input, Button, Popover, Form, Switch } from 'antd';
-const { TextArea } = Input;
-import FormItemAddTag from './FormItemAddTag';
-import FormItemCategory from './FormItemCategory';
-import FormItemUpload from '@/components/FormItemUpload';
-import FormItemCollect2Column from './FormItemCollect2Column';
+import { Button, Form, Input, Popover, Switch } from 'antd';
 import { useState } from 'react';
 
-const text = <div className={styles['header']}>发布文章</div>;
-const onFinish = (values: any, { title, mainContent }: popupContentProps) => {
+import FormItemUpload from '@/components/FormItemUpload';
+
+import styles from './EditorHeader.module.less';
+import FormItemAddTag from './FormItemAddTag';
+import FormItemCategory from './FormItemCategory';
+import FormItemCollect2Column from './FormItemCollect2Column';
+
+const { TextArea } = Input;
+const onFinish = (
+  values: any,
+  {
+    title,
+    mainContent,
+  }: {
+    title: string;
+    mainContent: string;
+  },
+) => {
   console.log('[values]: ', values);
   console.log('[title]: ', title);
   console.log('[mainContent]: ', mainContent);
@@ -17,21 +27,44 @@ const onFinish = (values: any, { title, mainContent }: popupContentProps) => {
 const onFinishFailed = () => {
   console.log('onFinishFailed');
 };
-// const onChange = (checked: boolean) => {
-//   console.log(`switch to ${checked}`);
-// };
 
-interface popupContentProps {
+const EditorHeader: React.FC<{ mainContent: string }> = ({ mainContent }) => {
+  const [title, setTitle] = useState('');
+  return (
+    <header className={styles['editor-header']}>
+      <Input
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        bordered={false}
+        placeholder='起一个响亮的标题吧'
+      />
+      <div className={styles['btn-group']}>
+        <Button ghost type='primary'>
+          草稿箱
+        </Button>
+        <Popover
+          transitionName=''
+          placement='bottomRight'
+          title={<div className={styles['header']}>发布文章</div>}
+          content={PopoverContent({ title: title, mainContent: mainContent })}
+          trigger='click'
+          overlayClassName={styles['submit-overlay']}
+        >
+          <Button type='primary'>发布</Button>
+        </Popover>
+      </div>
+    </header>
+  );
+};
+
+const PopoverContent: React.FC<{
   title: string;
   mainContent: string;
-}
-const content = ({ title, mainContent }: popupContentProps) => {
+}> = ({ title, mainContent }) => {
   const [form] = Form.useForm();
   const onSubmit = () => {
-    console.log('click');
     form.validateFields();
     form.submit();
-    window.fff = form;
   };
   return (
     <>
@@ -100,6 +133,14 @@ const content = ({ title, mainContent }: popupContentProps) => {
         >
           <Input.Password />
         </Form.Item>
+        <Form.Item
+          label='是否可见'
+          name='visible'
+          valuePropName='checked'
+          rules={[{ required: false }]}
+        >
+          <Switch />
+        </Form.Item>
       </Form>
       <div className={styles['footer']}>
         <Button ghost type='primary'>
@@ -112,37 +153,4 @@ const content = ({ title, mainContent }: popupContentProps) => {
     </>
   );
 };
-
-interface EditorHeaderProps {
-  mainContent: string;
-}
-const EditorHeader: React.FC<EditorHeaderProps> = ({ mainContent }) => {
-  const [title, setTitle] = useState('');
-  return (
-    <header className={styles['editor-header']}>
-      <Input
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        bordered={false}
-        placeholder='起一个响亮的标题吧'
-      />
-      <div className={styles['btn-group']}>
-        <Button ghost type='primary'>
-          草稿箱
-        </Button>
-        <Popover
-          transitionName=''
-          placement='bottomRight'
-          title={text}
-          content={content({ title: title, mainContent: mainContent })}
-          trigger='click'
-          overlayClassName={styles['submit-overlay']}
-        >
-          <Button type='primary'>发布</Button>
-        </Popover>
-      </div>
-    </header>
-  );
-};
-
 export default EditorHeader;

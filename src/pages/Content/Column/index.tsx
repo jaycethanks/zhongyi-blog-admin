@@ -26,17 +26,15 @@ const RightOperation: React.FC<{ handleAdd: () => void }> = ({ handleAdd }) => {
 const PageTabs: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState<'add' | 'edit'>('add');
-  const [initialValues, setInitialValues] = useState();
+  const [initialValues, setInitialValues] = useState<API.Column>();
   const handleEdit = (columnRecord: API.Column) => {
-    // TODO: BugFix
     console.log('[columnRecord]: ', columnRecord);
-    if (columnRecord) {
-      setInitialValues(columnRecord);
-    }
+    setInitialValues(columnRecord);
     setType('edit');
     setOpen(true);
   };
   const handleAdd = () => {
+    setInitialValues(undefined);
     setType('add');
     setOpen(true);
   };

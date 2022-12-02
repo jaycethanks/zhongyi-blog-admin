@@ -1,23 +1,17 @@
 import { Form, Input, Modal, Switch } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import FormItemUpload from '@/components/FormItemUpload';
 
 const { TextArea } = Input;
 import type { FormInstance } from 'antd/es/form';
-interface FormFields {
-  name: string;
-  description: string;
-  tags: string;
-  cover: string;
-  visiable: false;
-}
+
 interface NewColumnModalProps {
   open: boolean;
   type: 'add' | 'edit';
   onValidateFinish: (values: any) => void;
   onModalClose: any;
-  initialValues?: FormFields;
+  initialValues?: API.Column;
 }
 
 const NewColumnModal: React.FC<NewColumnModalProps> = ({
@@ -28,6 +22,14 @@ const NewColumnModal: React.FC<NewColumnModalProps> = ({
   initialValues,
 }) => {
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (initialValues === undefined) {
+      form.resetFields();
+    } else {
+      form.setFieldsValue(initialValues);
+    }
+  }, [initialValues]);
 
   const onFinishFailed = () => {
     console.warn('modal validate failed');
@@ -44,6 +46,7 @@ const NewColumnModal: React.FC<NewColumnModalProps> = ({
         title={type === 'add' ? '新建专栏' : '编辑专栏'}
         centered
         open={open}
+        okText={type === 'add' ? '确定' : '更新'}
         onOk={() => onModalOk(form)}
         onCancel={() => onModalClose()}
         width={'40rem'}
@@ -53,7 +56,6 @@ const NewColumnModal: React.FC<NewColumnModalProps> = ({
           name='basic'
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 20 }}
-          initialValues={initialValues}
           onFinish={(values) => onValidateFinish(values)}
           onFinishFailed={onFinishFailed}
           autoComplete='off'

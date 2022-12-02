@@ -1,22 +1,35 @@
-import React from 'react';
-import { Modal, Form, Input, Switch } from 'antd';
+import { Form, Input, Modal, Switch } from 'antd';
+import React, { useEffect } from 'react';
+
 const { TextArea } = Input;
 import type { FormInstance } from 'antd/es/form';
 
 interface NewCateModalProps {
   open: boolean;
-  onFinish: (values: any) => void;
-  onModalClose: () => void;
+  type: 'add' | 'edit';
+  onValidateFinish: (values: any) => void;
+  onModalClose: any;
+  initialValues?: API.Category;
 }
-const NewCateModal: React.FC<NewCateModalProps> = ({
+
+const NewTagModal: React.FC<NewCateModalProps> = ({
+  type,
   open,
-  onFinish,
+  onValidateFinish,
   onModalClose,
+  initialValues,
 }) => {
   const [form] = Form.useForm();
-
+  useEffect(() => {
+    // 值的回显
+    if (initialValues === undefined) {
+      form.resetFields();
+    } else {
+      form.setFieldsValue(initialValues);
+    }
+  }, [initialValues]);
   const onFinishFailed = () => {
-    console.log('onFinishFailed');
+    console.warn('modal validate failed');
   };
   const onModalOk = (form: FormInstance) => {
     form.validateFields();
@@ -27,9 +40,10 @@ const NewCateModal: React.FC<NewCateModalProps> = ({
       <Modal
         transitionName=''
         maskTransitionName=''
-        title='新增分类'
+        title={type === 'add' ? '新建分类' : '编辑分类'}
         centered
         open={open}
+        okText={type === 'add' ? '确定' : '更新'}
         onOk={() => onModalOk(form)}
         onCancel={() => onModalClose()}
         width={'40rem'}
@@ -39,12 +53,7 @@ const NewCateModal: React.FC<NewCateModalProps> = ({
           name='basic'
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 20 }}
-          initialValues={{
-            category: 'c',
-            isbanner: false,
-            tags: 'default tag',
-          }}
-          onFinish={(values) => onFinish(values)}
+          onFinish={(values) => onValidateFinish(values)}
           onFinishFailed={onFinishFailed}
           autoComplete='off'
         >
@@ -83,4 +92,4 @@ const NewCateModal: React.FC<NewCateModalProps> = ({
   );
 };
 
-export default NewCateModal;
+export default NewTagModal;
