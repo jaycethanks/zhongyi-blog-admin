@@ -1,15 +1,14 @@
-import { login } from '@/services/ant-design-pro/api';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import {
-  LoginForm,
-  ProFormCheckbox,
-  ProFormText,
-} from '@ant-design/pro-components';
-import { history, useModel } from '@umijs/max';
 import { Alert, message } from 'antd';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
+
+import { login } from '@/services/ant-design-pro/api';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
+import { history, useModel } from '@umijs/max';
+
 import styles from './index.less';
+
 const LoginMessage: React.FC<{
   content: string;
 }> = ({ content }) => {
