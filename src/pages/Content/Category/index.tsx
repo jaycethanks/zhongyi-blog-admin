@@ -1,6 +1,9 @@
 import { Button, Card, Tabs } from 'antd';
 import React, { useState } from 'react';
 
+import { getCounts } from '@/services/api/contentManage';
+import { useRequest } from '@umijs/max';
+
 import CategoryMainArea from './CategoryMainArea';
 import NewCategoryModal from './NewCategoryModal/index';
 
@@ -26,6 +29,10 @@ const PageTabs: React.FC = () => {
     console.log('onFinish');
   };
 
+  const { data } = useRequest(() => {
+    return getCounts('categorys');
+  });
+
   return (
     <>
       <Tabs
@@ -36,7 +43,7 @@ const PageTabs: React.FC = () => {
         }
         items={[
           {
-            label: '分类(9)',
+            label: `分类(${data ?? 'querying...'})`,
             key: 'category',
             children: <CategoryMainArea handleEdit={handleEdit} />,
           }, // remember to pass the key prop

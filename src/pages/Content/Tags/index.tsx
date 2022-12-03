@@ -1,6 +1,9 @@
 import { Button, Card, Tabs } from 'antd';
 import React, { useState } from 'react';
 
+import { getCounts } from '@/services/api/contentManage';
+import { useRequest } from '@umijs/max';
+
 import NewTagModal from './NewTagModal/index';
 import TagsMainArea from './TagsMainArea';
 
@@ -26,6 +29,10 @@ const PageTabs: React.FC = () => {
     console.log('onFinish');
   };
 
+  const { data } = useRequest(() => {
+    return getCounts('tags');
+  });
+
   return (
     <>
       <Tabs
@@ -36,7 +43,7 @@ const PageTabs: React.FC = () => {
         }
         items={[
           {
-            label: '标签(9)',
+            label: `标签(${data ?? 'querying...'})`,
             key: 'essays',
             children: <TagsMainArea handleEdit={handleEdit} />,
           }, // remember to pass the key prop

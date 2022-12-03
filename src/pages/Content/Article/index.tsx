@@ -1,19 +1,31 @@
 import { Card, Input, Tabs } from 'antd';
 import React from 'react';
 
+import { getCounts } from '@/services/api/contentManage';
 import { SearchOutlined } from '@ant-design/icons';
+import { useRequest } from '@umijs/max';
 
 import Drafts from './Drafts';
 import Essays from './Essays';
 
 const PageTabs: React.FC = () => {
+  const { data: articleCount } = useRequest(() => {
+    return getCounts('articles');
+  });
+  const { data: draftCount } = useRequest(() => {
+    return getCounts('drafts');
+  });
   const items = [
     {
-      label: '文章(999)',
+      label: `文章(${articleCount ?? 'querying...'})`,
       key: 'essays',
       children: <Essays />,
     }, // remember to pass the key prop
-    { label: '草稿箱(66)', key: 'drafts', children: <Drafts /> },
+    {
+      label: `草稿箱(${draftCount ?? 'querying...'})`,
+      key: 'drafts',
+      children: <Drafts />,
+    },
   ];
   return (
     <Tabs

@@ -225,6 +225,38 @@ export default {
     });
   },
 
+  'GET /api/admin/getCounts': async (req: Request, res: Response) => {
+    await waitTime(1000);
+
+    const {
+      query: { type },
+    } = req;
+
+    let count = 0;
+    switch (type) {
+      case 'articles':
+        count = 92;
+        break;
+      case 'drafts':
+        count = 8;
+        break;
+      case 'tags':
+        count = 11;
+        break;
+      case 'columns':
+        count = 5;
+        break;
+      case 'categorys':
+        count = 12;
+        break;
+    }
+
+    res.send({
+      success: true,
+      data: count,
+    });
+  },
+
   'GET /api/rule': [{ name: '12' }],
   'POST /api/rule': (req: Request, res: Response, u: string) => {
     res.send({

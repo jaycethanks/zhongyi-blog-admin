@@ -5,26 +5,8 @@ import { useRequest } from 'umi';
 
 import Loading from '@/components/Loading';
 import { getArticleList } from '@/services/api/contentManage';
-import {
-    EyeInvisibleOutlined, EyeOutlined, LikeOutlined, MessageOutlined, ReadOutlined, StarOutlined
-} from '@ant-design/icons';
 
 import styles from './index.module.less';
-
-// const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
-//   <Space>
-//     {React.createElement<{ twoToneColor: string }>((props:any)=>icon, {
-//       twoToneColor: '#ff4400',
-//     })}
-//     {text}
-//   </Space>
-// );
-const IconText = ({ icon, text }: { icon: ReactElement; text: string }) => (
-  <Space>
-    {icon}
-    {text}
-  </Space>
-);
 
 const Essays: React.FC = () => {
   // const [list, setList] = useState<API.Columns>([]);
@@ -80,37 +62,6 @@ const Essays: React.FC = () => {
               编辑
             </a>,
             [<a key='list-item-delete'>删除</a>],
-            // <IconText
-            //   icon={ReadOutlined}
-            //   text='156'
-            //   key='list-vertical-read-o'
-            // />,
-            <IconText
-              icon={<ReadOutlined />}
-              text='156'
-              key='list-vertical-read-o'
-            />,
-            <IconText
-              icon={<LikeOutlined />}
-              text='156'
-              key='list-vertical-like-o'
-            />,
-            <IconText
-              icon={<MessageOutlined />}
-              text='2'
-              key='list-vertical-message'
-            />,
-            <IconText
-              icon={
-                item.visible ? (
-                  <EyeOutlined />
-                ) : (
-                  <EyeInvisibleOutlined style={{ color: '#ff4d4f' }} />
-                )
-              }
-              text=''
-              key='list-vertical-message'
-            />,
           ]}
         >
           <List.Item.Meta

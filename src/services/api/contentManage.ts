@@ -41,3 +41,14 @@ export async function getArticleByid(artid: string) {
     params: { artid },
   });
 }
+
+export async function getCounts(
+  type: 'articles' | 'drafts' | 'tags' | 'columns' | 'categorys',
+) {
+  return request<{
+    data: number;
+  }>('/api/admin/getCounts', {
+    method: 'GET',
+    params: { type },
+  });
+}

@@ -1,7 +1,9 @@
 import { Button, Card, Input, Tabs } from 'antd';
 import React, { useState } from 'react';
 
+import { getCounts } from '@/services/api/contentManage';
 import { SearchOutlined } from '@ant-design/icons';
+import { useRequest } from '@umijs/max';
 
 import ColumnMainArea from './ColumnMainArea';
 import styles from './index.module.less';
@@ -44,13 +46,17 @@ const PageTabs: React.FC = () => {
     console.log('onFinish');
   };
 
+  const { data } = useRequest(() => {
+    return getCounts('columns');
+  });
+
   return (
     <>
       <Tabs
         tabBarExtraContent={<RightOperation handleAdd={handleAdd} />}
         items={[
           {
-            label: '专栏(9)',
+            label: `专栏(${data ?? 'querying...'})`,
             key: 'essays',
             children: <ColumnMainArea handleEdit={handleEdit} />,
           }, // remember to pass the key prop
