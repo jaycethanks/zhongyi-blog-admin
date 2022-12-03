@@ -11,7 +11,7 @@ const waitTime = (time: number = 100) => {
 export default {
   'GET /api/admin/columns': async (req: Request, res: Response) => {
     // const { password, username, type } = req.body;
-    await waitTime(2000);
+    await waitTime(100);
     res.send({
       success: true,
       data: [
@@ -46,7 +46,7 @@ export default {
   },
   'GET /api/admin/tags': async (req: Request, res: Response) => {
     // const { password, username, type } = req.body;
-    await waitTime(2000);
+    await waitTime(100);
     res.send({
       success: true,
       data: [
@@ -75,7 +75,7 @@ export default {
   },
   'GET /api/admin/categorys': async (req: Request, res: Response) => {
     // const { password, username, type } = req.body;
-    await waitTime(2000);
+    await waitTime(100);
     res.send({
       success: true,
       data: [
@@ -113,7 +113,7 @@ export default {
 
   'GET /api/admin/articlelist': async (req: Request, res: Response) => {
     // const { password, username, type } = req.body;
-    await waitTime(2000);
+    await waitTime(100);
     res.send({
       success: true,
       data: [
@@ -206,7 +206,7 @@ export default {
   },
   'GET /api/admin/getArticleByid': async (req: Request, res: Response) => {
     // const { password, username, type } = req.body;
-    await waitTime(1000);
+    await waitTime(100);
     res.send({
       success: true,
       data: {
