@@ -1,7 +1,7 @@
-import styles from './FormItemCollect2Column.module.less';
-
-import React from 'react';
 import { Select } from 'antd';
+import React from 'react';
+
+import styles from './FormItemCollect2Column.module.less';
 
 interface ColumnProps {
   value?: string;
@@ -10,11 +10,10 @@ interface ColumnProps {
 const App: React.FC<ColumnProps> = ({ value, onChange }) => {
   const handleChange = (value: string) => {
     onChange?.(value);
-    console.log(`selected ${value}`);
   };
   return (
     <Select
-      defaultValue={value}
+      value={value}
       onChange={handleChange}
       className={styles['form-item-column']}
       showSearch

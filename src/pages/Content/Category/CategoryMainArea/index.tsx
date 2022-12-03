@@ -2,6 +2,7 @@ import { Divider, Table } from 'antd';
 import React from 'react';
 import { useRequest } from 'umi';
 
+import Loading from '@/components/Loading';
 import { getCategorys } from '@/services/api/contentManage';
 
 const TagsMainArea: React.FC<{
@@ -59,7 +60,11 @@ const TagsMainArea: React.FC<{
     },
   ];
 
-  return <Table rowKey='catid' dataSource={data} columns={columns} />;
+  if (loading) {
+    return <Loading />;
+  } else {
+    return <Table rowKey='catid' dataSource={data} columns={columns} />;
+  }
 };
 
 export default TagsMainArea;

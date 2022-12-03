@@ -11,7 +11,7 @@ const waitTime = (time: number = 100) => {
 export default {
   'GET /api/admin/columns': async (req: Request, res: Response) => {
     // const { password, username, type } = req.body;
-    await waitTime(100);
+    await waitTime(2000);
     res.send({
       success: true,
       data: [
@@ -46,7 +46,7 @@ export default {
   },
   'GET /api/admin/tags': async (req: Request, res: Response) => {
     // const { password, username, type } = req.body;
-    await waitTime(100);
+    await waitTime(2000);
     res.send({
       success: true,
       data: [
@@ -75,7 +75,7 @@ export default {
   },
   'GET /api/admin/categorys': async (req: Request, res: Response) => {
     // const { password, username, type } = req.body;
-    await waitTime(100);
+    await waitTime(2000);
     res.send({
       success: true,
       data: [
@@ -113,7 +113,7 @@ export default {
 
   'GET /api/admin/articlelist': async (req: Request, res: Response) => {
     // const { password, username, type } = req.body;
-    await waitTime(100);
+    await waitTime(2000);
     res.send({
       success: true,
       data: [
@@ -202,6 +202,26 @@ export default {
           artid: '7',
         },
       ],
+    });
+  },
+  'GET /api/admin/getArticleByid': async (req: Request, res: Response) => {
+    // const { password, username, type } = req.body;
+    await waitTime(1000);
+    res.send({
+      success: true,
+      data: {
+        artid: 'nasldnasd',
+        title: '测试标题',
+        content: '测试文章内容',
+        description: '这是一段文章描述',
+        cover: 'http://placeimg.com/640/480',
+        visible: true,
+        category: '这是一个分类的value(id)',
+        tags: ['c1212', 'c1313'],
+        column: '1',
+        isbanner: true,
+        password: '1234',
+      },
     });
   },
 

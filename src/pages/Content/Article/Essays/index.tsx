@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRequest } from 'umi';
 
+import Loading from '@/components/Loading';
 import { getArticleList } from '@/services/api/contentManage';
 import {
     EyeInvisibleOutlined, EyeOutlined, LikeOutlined, MessageOutlined, ReadOutlined, StarOutlined
@@ -43,7 +44,7 @@ const Essays: React.FC = () => {
   // }, [data]);
 
   if (loading) {
-    return <div>loading...</div>;
+    return <Loading />;
   }
   if (error) {
     return <div>{error.message}</div>;

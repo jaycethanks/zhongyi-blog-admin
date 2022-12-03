@@ -2,6 +2,7 @@ import { List } from 'antd';
 import React from 'react';
 import { useRequest } from 'umi';
 
+import Loading from '@/components/Loading';
 import { getColumns } from '@/services/api/contentManage';
 
 import styles from './index.module.less';
@@ -21,7 +22,7 @@ const ColumnMainArea: React.FC<{
   // }, [data]);
 
   if (loading) {
-    return <div>loading...</div>;
+    return <Loading />;
   }
   if (error) {
     return <div>{error.message}</div>;

@@ -2,6 +2,7 @@ import { Divider, Table } from 'antd';
 import React from 'react';
 import { useRequest } from 'umi';
 
+import Loading from '@/components/Loading';
 import { getTags } from '@/services/api/contentManage';
 
 const TagsMainArea: React.FC<{ handleEdit: (tagRecord: API.Tag) => void }> = ({
@@ -54,6 +55,9 @@ const TagsMainArea: React.FC<{ handleEdit: (tagRecord: API.Tag) => void }> = ({
     },
   ];
 
+  if (loading) {
+    return <Loading />;
+  }
   return <Table rowKey='tagid' dataSource={data} columns={columns} />;
 };
 

@@ -49,8 +49,14 @@ declare namespace API {
   type EditorArticle = {
     artid: string;
     title: string;
+    content: string;
     description?: string;
     cover?: string;
     visible: boolean;
+    category: string;
+    tags: string[];
+    column: string;
+    isbanner: boolean;
+    password: string;
   };
 }

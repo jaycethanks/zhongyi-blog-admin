@@ -1,13 +1,14 @@
-import React from 'react';
 import { Select } from 'antd';
-import type { SelectProps } from 'antd';
+import React from 'react';
+
 import styles from './FormItemAddTag.module.less';
 
+import type { SelectProps } from 'antd';
 const options: SelectProps['options'] = [];
 
 for (let i = 10; i < 36; i++) {
   options.push({
-    value: i.toString(36) + i,
+    value: i.toString(36) + i + i,
     label: i.toString(36) + i,
   });
 }
@@ -19,11 +20,10 @@ interface AddtagProps {
 const FormItemAddTag: React.FC<AddtagProps> = ({ value, onChange }) => {
   const handleChange = (value: string) => {
     onChange?.(value);
-    console.log(`selected ${value}`);
   };
   return (
     <Select
-      defaultValue={value}
+      value={value}
       showArrow
       mode='tags'
       style={{ width: '100%' }}

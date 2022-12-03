@@ -33,10 +33,11 @@ export async function getArticleList() {
   });
 }
 
-export async function getArticleByid() {
+export async function getArticleByid(artid: string) {
   return request<{
     data: API.EditorArticle;
-  }>('/api/admin/articlelist', {
+  }>('/api/admin/getArticleByid', {
     method: 'GET',
+    params: { artid },
   });
 }
