@@ -11,10 +11,12 @@
  */
 export default {
   dev: {
-    '/api': {
-      target: 'https://preview.pro.ant.design/',
+    '/api/': {
+      target: 'http://locahost:4567/',
       changeOrigin: true,
-      pathRewrite: { '^/api': '' },
+      logLevel: 'debug',
+      secure: false,
+      pathRewrite: { '^/api': '/admin' },
     },
   },
   /**

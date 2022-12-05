@@ -2,7 +2,8 @@ import { Alert, message } from 'antd';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 
-import { login } from '@/services/ant-design-pro/api';
+import { login } from '@/services/api/login';
+import token from '@/utils/token';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
 import { history, useModel } from '@umijs/max';
@@ -40,6 +41,7 @@ const Login: React.FC = () => {
     }
   };
   const handleSubmit = async (values: API.LoginParams) => {
+    console.log('[values]: ', values);
     try {
       // 登录
       const msg = await login({
@@ -49,8 +51,10 @@ const Login: React.FC = () => {
       if (msg.status === 'ok') {
         // const defaultLoginSuccessMessage = '登录成功！';
         message.success('登录成功！');
+        token.save(msg.currentAuthority!);
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
+        console.log('[urlParams]: ', urlParams);
         history.push(urlParams.get('redirect') || '/');
         return;
       }
