@@ -77,7 +77,7 @@ const Login: React.FC = () => {
         <LoginForm
           initialValues={{
             autoLogin: true,
-            username: 'admin',
+            account: 'admin',
             password: 'ant.design',
           }}
           onFinish={async (values) => {
@@ -89,7 +89,7 @@ const Login: React.FC = () => {
           )}
           <>
             <ProFormText
-              name='username'
+              name='account'
               fieldProps={{
                 size: 'large',
                 prefix: <UserOutlined className={styles.prefixIcon} />,

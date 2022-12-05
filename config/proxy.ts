@@ -12,7 +12,7 @@
 export default {
   dev: {
     '/api/': {
-      target: 'http://locahost:4567/',
+      target: 'http://localhost:4567/',
       changeOrigin: true,
       logLevel: 'debug',
       secure: false,

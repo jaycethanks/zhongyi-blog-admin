@@ -3,15 +3,15 @@
 // DO NOT CHANGE IT MANUALLY!
 import React, { useEffect, useState } from 'react';
 import { ApplyPluginsType } from 'umi';
-import { renderClient, RenderClientOpts } from '/home/jayce/Desktop/Projects/zhongyi-blog-admin/node_modules/@umijs/preset-umi/node_modules/@umijs/renderer-react';
+import { renderClient, RenderClientOpts } from '/home/jayce/Desktop/workspace_personal/zhongyi-blog-admin/node_modules/@umijs/preset-umi/node_modules/@umijs/renderer-react';
 import { createHistory } from './core/history';
 import { createPluginManager } from './core/plugin';
 import { getRoutes } from './core/route';
 import type { Location } from 'history';
 
 import './core/polyfill';
-import '/home/jayce/Desktop/Projects/zhongyi-blog-admin/src/global.less';
-import '/home/jayce/Desktop/Projects/zhongyi-blog-admin/src/global.tsx';
+import '/home/jayce/Desktop/workspace_personal/zhongyi-blog-admin/src/global.less';
+import '/home/jayce/Desktop/workspace_personal/zhongyi-blog-admin/src/global.tsx';
 import 'antd/dist/antd.less';
 const publicPath = '/';
 const runtimePublicPath = false;
