@@ -40,27 +40,39 @@ const Login: React.FC = () => {
       });
     }
   };
-  const handleSubmit = async (values: API.LoginParams) => {
+  const handleSubmit = async (values: API.LoginForm) => {
     console.log('[values]: ', values);
     try {
       // 登录
-      const msg = await login({
+      const res = await login({
         ...values,
-        type,
       });
-      if (msg.status === 'ok') {
-        // const defaultLoginSuccessMessage = '登录成功！';
-        message.success('登录成功！');
-        token.save(msg.currentAuthority!);
+
+      if (res.code === 0 && res.data) {
+        const { access_token } = res.data;
+        token.save(access_token);
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
-        console.log('[urlParams]: ', urlParams);
         history.push(urlParams.get('redirect') || '/');
-        return;
       }
-      console.log(msg);
+
+      // if (res.code === 0 && res?.data) {
+
+      //   }
+      //   // const defaultLoginSuccessMessage = '登录成功！';
+
+      //   message.success('登录成功！');
+
+      //   token.save();
+      //   await fetchUserInfo();
+      //   const urlParams = new URL(window.location.href).searchParams;
+      //   console.log('[urlParams]: ', urlParams);
+      //   history.push(urlParams.get('redirect') || '/');
+      //   return;
+      // }
+      // console.log(msg);
       // 如果失败去设置用户错误信息
-      setUserLoginState(msg);
+      // setUserLoginState(msg);
     } catch (error) {
       // const defaultLoginFailureMessage = '登录失败，请重试！';
       // console.log(error);
@@ -76,12 +88,11 @@ const Login: React.FC = () => {
         subTitle={'Ant Design 是西湖区最具影响力的 Web 设计规范'} */}
         <LoginForm
           initialValues={{
-            autoLogin: true,
             account: 'admin',
             password: 'ant.design',
           }}
           onFinish={async (values) => {
-            await handleSubmit(values as API.LoginParams);
+            await handleSubmit(values as API.LoginForm);
           }}
         >
           {status === 'error' && loginType === 'account' && (
@@ -118,7 +129,7 @@ const Login: React.FC = () => {
             />
           </>
 
-          <div
+          {/* <div
             style={{
               marginBottom: 24,
             }}
@@ -126,7 +137,7 @@ const Login: React.FC = () => {
             <ProFormCheckbox noStyle name='autoLogin'>
               自动登录
             </ProFormCheckbox>
-          </div>
+          </div> */}
         </LoginForm>
       </div>
     </div>

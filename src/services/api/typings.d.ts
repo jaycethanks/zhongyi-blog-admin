@@ -2,6 +2,17 @@
 /* eslint-disable */
 
 declare namespace API {
+  type LoginForm = {
+    account: string;
+    password: string;
+  };
+
+  type LoginRes = {
+    code: number;
+    data?: { access_token: string };
+    success: boolean;
+    message: string;
+  };
   type Column = {
     colid?: string;
     name?: string;

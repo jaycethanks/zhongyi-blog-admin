@@ -26,10 +26,10 @@ export async function outLogin(options?: { [key: string]: any }) {
 
 /** 登录接口 POST /api/login/account */
 export async function login(
-  body: API.LoginParams,
+  body: API.LoginForm,
   options?: { [key: string]: any },
 ) {
-  return request<API.LoginResult>('/api/login/account', {
+  return request<API.LoginRes>('/api/login/account', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

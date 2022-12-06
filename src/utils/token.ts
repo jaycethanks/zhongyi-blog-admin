@@ -1,8 +1,8 @@
 export default {
   get() {
-    return window.sessionStorage.getItem('TOKEN');
+    return window.localStorage.getItem('TOKEN');
   },
   save(token: string) {
-    window.sessionStorage.setItem('TOKEN', token);
+    window.localStorage.setItem('TOKEN', token);
   },
 };

@@ -47,9 +47,9 @@ declare namespace API {
   };
 
   type LoginResult = {
-    status?: string;
-    type?: string;
-    currentAuthority?: string;
+    // status?: string;
+    // type?: string;
+    // currentAuthority?: string;
   };
 
   type NoticeIconItem = {
