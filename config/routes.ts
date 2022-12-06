@@ -25,7 +25,7 @@ export default [
     path: '/content',
     name: '内容管理',
     icon: 'blockOutlined',
-    access: 'canAdmin',
+    // access: 'canAdmin',
     routes: [
       { path: '/content', redirect: '/content/article' },
 
@@ -52,7 +52,7 @@ export default [
     path: '/settings',
     name: '设置中心',
     icon: 'settingOutlined',
-    access: 'canAdmin',
+    // access: 'canAdmin',
     routes: [
       { path: '/settings', redirect: '/settings/basic' },
       { path: '/settings/basic', name: '基础信息', component: './Settings' },

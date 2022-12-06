@@ -1,12 +1,12 @@
 // import Footer from '@/components/Footer';
 import RightContent from '@/components/RightContent';
+import { currentUser as queryCurrentUser } from '@/services/api/login';
 import { LinkOutlined } from '@ant-design/icons';
 import { SettingDrawer } from '@ant-design/pro-components';
 import { history, Link, useModel } from '@umijs/max';
 
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
-import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';

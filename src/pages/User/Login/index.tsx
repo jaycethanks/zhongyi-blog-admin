@@ -1,4 +1,5 @@
 import { Alert, message } from 'antd';
+import { response } from 'express';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 
@@ -54,13 +55,13 @@ const Login: React.FC = () => {
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
         history.push(urlParams.get('redirect') || '/');
+        return;
       }
 
       // if (res.code === 0 && res?.data) {
 
       //   }
       //   // const defaultLoginSuccessMessage = '登录成功！';
-
       //   message.success('登录成功！');
 
       //   token.save();
@@ -75,11 +76,10 @@ const Login: React.FC = () => {
       // setUserLoginState(msg);
     } catch (error) {
       // const defaultLoginFailureMessage = '登录失败，请重试！';
-      // console.log(error);
+      // const {response:{data:message}} = error
       message.error('登录失败，请重试！');
     }
   };
-  const { status, type: loginType } = userLoginState;
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -88,16 +88,16 @@ const Login: React.FC = () => {
         subTitle={'Ant Design 是西湖区最具影响力的 Web 设计规范'} */}
         <LoginForm
           initialValues={{
-            account: 'admin',
+            account: '13407135362',
             password: 'ant.design',
           }}
           onFinish={async (values) => {
             await handleSubmit(values as API.LoginForm);
           }}
         >
-          {status === 'error' && loginType === 'account' && (
+          {/* {status === 'error' && loginType === 'account' && (
             <LoginMessage content={'错误的用户名和密码(admin/ant.design)'} />
-          )}
+          )} */}
           <>
             <ProFormText
               name='account'
