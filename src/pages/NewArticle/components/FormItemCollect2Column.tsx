@@ -1,6 +1,9 @@
 import { Select } from 'antd';
 import React from 'react';
 
+import { getColumns } from '@/services/api/content';
+import { useRequest } from '@umijs/max';
+
 import styles from './FormItemCollect2Column.module.less';
 
 interface ColumnProps {
@@ -11,6 +14,11 @@ const App: React.FC<ColumnProps> = ({ value, onChange }) => {
   const handleChange = (value: string) => {
     onChange?.(value);
   };
+
+  const { data, error, loading } = useRequest(() => {
+    return getColumns();
+  });
+
   return (
     <Select
       value={value}
@@ -19,38 +27,14 @@ const App: React.FC<ColumnProps> = ({ value, onChange }) => {
       showSearch
       placeholder='选择收录至专栏'
       optionFilterProp='children'
-      filterOption={(input, option) => (option?.label ?? '').includes(input)}
+      fieldNames={{ label: 'name', value: 'colid' }}
+      filterOption={(input, option) => (option?.name ?? '').includes(input)}
       filterSort={(optionA, optionB) =>
-        (optionA?.label ?? '')
+        (optionA?.name ?? '')
           .toLowerCase()
-          .localeCompare((optionB?.label ?? '').toLowerCase())
+          .localeCompare((optionB?.name ?? '').toLowerCase())
       }
-      options={[
-        {
-          value: '1',
-          label: '中国',
-        },
-        {
-          value: '4',
-          label: '爱你',
-        },
-        {
-          value: '5',
-          label: '爱我',
-        },
-        {
-          value: '2',
-          label: '中央',
-        },
-        {
-          value: '3',
-          label: '衷心',
-        },
-        {
-          value: '6',
-          label: 'Cancelled',
-        },
-      ]}
+      options={data}
     />
   );
 };

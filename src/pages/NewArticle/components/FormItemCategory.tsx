@@ -24,7 +24,7 @@ const App: React.FC<CategoryProps> = ({ value, onChange }) => {
     if (data) {
       const opts = data.map((it) => ({
         label: it.name,
-        value: it.tagid,
+        value: it.catid,
       })) as RadioGroupOpt[];
       setOptions(opts);
     }
@@ -44,14 +44,6 @@ const App: React.FC<CategoryProps> = ({ value, onChange }) => {
         {options.map((it) => {
           return <Radio.Button value={it.value}>{it.label}</Radio.Button>;
         })}
-        {/* <Radio.Button value='a'>Hangzhou</Radio.Button>
-        <Radio.Button value='b'>Shanghai</Radio.Button>
-        <Radio.Button value='c'>Beijing</Radio.Button>
-        <Radio.Button value='d'>Chengdu</Radio.Button>
-        <Radio.Button value='e'>Chengdu</Radio.Button>
-        <Radio.Button value='f'>Chengdu</Radio.Button>
-        <Radio.Button value='g'>Chengdu</Radio.Button>
-        <Radio.Button value='h'>Chengdu</Radio.Button> */}
       </Radio.Group>
     </>
   );

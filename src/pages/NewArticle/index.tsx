@@ -27,6 +27,7 @@ const plugins = [
 
 const NewArticle = () => {
   const [title, setTitle] = useState('');
+  const [open, setOpen] = useState(false);
   const [content, setContent] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   const { artid } = useParams();
@@ -66,6 +67,7 @@ const NewArticle = () => {
   };
   const onFinishFailed = () => {
     console.log('onFinishFailed');
+    setOpen(false);
   };
   const PopoverContent: React.FC = (_rest) => {
     const [form] = Form.useForm();
@@ -74,8 +76,8 @@ const NewArticle = () => {
         form.setFieldsValue(formData);
       }
     }, [formData]);
-    const onSubmit = () => {
-      form.validateFields();
+    const onSubmit = async () => {
+      await form.validateFields();
       form.submit(); //将会触发 onFinish 方法
     };
 
@@ -163,7 +165,7 @@ const NewArticle = () => {
           </Form.Item>
         </Form>
         <div className={styles['footer']}>
-          <Button ghost type='primary'>
+          <Button ghost type='primary' onClick={() => setOpen(false)}>
             取消
           </Button>
           <Button type='primary' onClick={onSubmit}>
@@ -191,6 +193,7 @@ const NewArticle = () => {
             保存到草稿箱
           </Button>
           <Popover
+            open={open}
             transitionName=''
             placement='bottomRight'
             title={
@@ -202,7 +205,9 @@ const NewArticle = () => {
             trigger='click'
             overlayClassName={styles['submit-overlay']}
           >
-            <Button type='primary'>{isEdit ? '更新' : '发布'}</Button>
+            <Button type='primary' onClick={() => setOpen(true)}>
+              {isEdit ? '更新' : '发布'}
+            </Button>
           </Popover>
         </div>
       </header>
