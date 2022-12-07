@@ -1,18 +1,10 @@
 import { Divider, Table } from 'antd';
 import React from 'react';
-import { useRequest } from 'umi';
 
-import Loading from '@/components/Loading';
-import { getTags } from '@/services/api/content';
-
-const TagsMainArea: React.FC<{ handleEdit: (tagRecord: API.Tag) => void }> = ({
-  handleEdit,
-}) => {
-  const { data, error, loading } = useRequest(() => {
-    console.log('refresh');
-    return getTags();
-  });
-
+const TagsMainArea: React.FC<{
+  handleEdit: (tagRecord: API.Tag) => void;
+  data: API.Tags;
+}> = ({ handleEdit, data }) => {
   const columns: any = [
     {
       title: '序号',
@@ -55,9 +47,6 @@ const TagsMainArea: React.FC<{ handleEdit: (tagRecord: API.Tag) => void }> = ({
     },
   ];
 
-  if (loading) {
-    return <Loading />;
-  }
   return <Table rowKey='tagid' dataSource={data} columns={columns} />;
 };
 

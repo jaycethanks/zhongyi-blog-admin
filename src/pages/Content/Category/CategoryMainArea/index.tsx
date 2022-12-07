@@ -1,25 +1,10 @@
 import { Divider, Table } from 'antd';
 import React from 'react';
-import { useRequest } from 'umi';
 
-import Loading from '@/components/Loading';
-import { getCategorys } from '@/services/api/content';
-
-import type { ColumnsType } from 'antd/es/table';
-const TagsMainArea: React.FC<{
+const CategoryMainArea: React.FC<{
   handleEdit: (categoryRecord: API.Category) => void;
-}> = ({ handleEdit }) => {
-  const { data, error, loading } = useRequest(() => {
-    return getCategorys();
-  });
-
-  interface DataType {
-    key: React.Key;
-    name: string;
-    description: string;
-    visible: boolean;
-  }
-  // const columns: ColumnsType<DataType> = [
+  data: API.Categorys;
+}> = ({ handleEdit, data }) => {
   const columns: any = [
     {
       title: '序号',
@@ -68,12 +53,7 @@ const TagsMainArea: React.FC<{
     },
   ];
 
-  if (loading) {
-    return <Loading />;
-  } else {
-    console.log('[data]: ', data);
-    return <Table rowKey='catid' dataSource={data} columns={columns} />;
-  }
+  return <Table rowKey='catid' dataSource={data} columns={columns} />;
 };
 
-export default TagsMainArea;
+export default CategoryMainArea;

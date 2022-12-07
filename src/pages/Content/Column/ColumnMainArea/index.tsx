@@ -1,33 +1,12 @@
 import { List } from 'antd';
 import React from 'react';
-import { useRequest } from 'umi';
-
-import Loading from '@/components/Loading';
-import { getColumns } from '@/services/api/content';
 
 import styles from './index.module.less';
 
 const ColumnMainArea: React.FC<{
   handleEdit: (columnRecord: API.Column) => void;
-}> = ({ handleEdit }) => {
-  // const [list, setList] = useState<API.Columns>([]);
-  const { data, error, loading } = useRequest(() => {
-    return getColumns();
-  });
-
-  // useEffect(() => {
-  //   if (data) {
-  //     setList(data);
-  //   }
-  // }, [data]);
-
-  if (loading) {
-    return <Loading />;
-  }
-  if (error) {
-    return <div>{error.message}</div>;
-  }
-
+  data: API.Columns;
+}> = ({ handleEdit, data }) => {
   return (
     <List
       className='demo-loadmore-list'

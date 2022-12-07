@@ -31,8 +31,8 @@ const NewTagModal: React.FC<NewCateModalProps> = ({
   const onFinishFailed = () => {
     console.warn('modal validate failed');
   };
-  const onModalOk = (form: FormInstance) => {
-    form.validateFields();
+  const onModalOk = async (form: FormInstance) => {
+    await form.validateFields();
     form.submit(); // 将会触发 onFinish
   };
   return (

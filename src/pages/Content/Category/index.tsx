@@ -1,8 +1,8 @@
 import { Button, Card, message, Tabs } from 'antd';
-import { result } from 'lodash';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { getCounts, newCategory } from '@/services/api/content';
+import Loading from '@/components/Loading';
+import { getCategorys, getCounts, newCategory } from '@/services/api/content';
 import { useRequest } from '@umijs/max';
 
 import CategoryMainArea from './CategoryMainArea';
@@ -12,6 +12,9 @@ const PageTabs: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState<'add' | 'edit'>('add');
   const [initialValues, setInitialValues] = useState<API.Category>();
+  const [list, setList] = useState<API.Categorys>([]);
+  const [count, setCount] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
   const handleEdit = (tagRecord: API.Category) => {
     if (tagRecord) {
       setInitialValues(tagRecord);
@@ -25,6 +28,33 @@ const PageTabs: React.FC = () => {
     setOpen(true);
   };
 
+  const loadData = async () => {
+    const loadCategorys = async () => {
+      const res = await getCategorys();
+      if (!res.data) {
+        message.error(res.message);
+      }
+      setList(res.data);
+    };
+
+    const loadCateCount = async () => {
+      const res = await getCounts('categorys');
+      if (res.code !== 0) {
+        message.error(res.message);
+      }
+      setCount(res.data);
+    };
+
+    setLoading(true);
+    Promise.allSettled([loadCategorys(), loadCateCount()]).finally(() => {
+      setLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   const onValidateFinish = async (values: any) => {
     const res = await newCategory(values);
     if (res.code === 0) {
@@ -33,11 +63,8 @@ const PageTabs: React.FC = () => {
     } else {
       message.error(res.message);
     }
+    loadData();
   };
-
-  const { data } = useRequest(() => {
-    return getCounts('categorys');
-  });
 
   return (
     <>
@@ -49,9 +76,13 @@ const PageTabs: React.FC = () => {
         }
         items={[
           {
-            label: `分类(${data ?? 'querying...'})`,
+            label: `分类(${loading ? 'querying...' : count})`,
             key: 'category',
-            children: <CategoryMainArea handleEdit={handleEdit} />,
+            children: loading ? (
+              <Loading />
+            ) : (
+              <CategoryMainArea handleEdit={handleEdit} data={list} />
+            ),
           }, // remember to pass the key prop
         ]}
       />

@@ -1,8 +1,8 @@
 import { Button, Card, message, Tabs } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { getCounts, newTag } from '@/services/api/content';
-import { useRequest } from '@umijs/max';
+import Loading from '@/components/Loading';
+import { getCounts, getTags, newTag } from '@/services/api/content';
 
 import NewTagModal from './NewTagModal/index';
 import TagsMainArea from './TagsMainArea';
@@ -11,6 +11,9 @@ const PageTabs: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState<'add' | 'edit'>('add');
   const [initialValues, setInitialValues] = useState<API.Tag>();
+  const [list, setList] = useState<API.Tags>([]);
+  const [count, setCount] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
   const handleEdit = (tagRecord: API.Tag) => {
     if (tagRecord) {
       setInitialValues(tagRecord);
@@ -24,6 +27,33 @@ const PageTabs: React.FC = () => {
     setOpen(true);
   };
 
+  const loadData = async () => {
+    const loadTags = async () => {
+      const res = await getTags();
+      if (!res.data) {
+        message.error(res.message);
+      }
+      setList(res.data);
+    };
+
+    const loadTagCount = async () => {
+      const res = await getCounts('tags');
+      if (res.code !== 0) {
+        message.error(res.message);
+      }
+      setCount(res.data);
+    };
+
+    setLoading(true);
+    Promise.allSettled([loadTags(), loadTagCount()]).finally(() => {
+      setLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   const onValidateFinish = async (values: any) => {
     const res = await newTag(values);
     if (res.code === 0) {
@@ -32,11 +62,8 @@ const PageTabs: React.FC = () => {
     } else {
       message.error(res.message);
     }
+    loadData();
   };
-
-  const { data } = useRequest(() => {
-    return getCounts('tags');
-  });
 
   return (
     <>
@@ -48,9 +75,13 @@ const PageTabs: React.FC = () => {
         }
         items={[
           {
-            label: `标签(${data ?? 'querying...'})`,
+            label: `标签(${loading ? 'querying...' : count})`,
             key: 'essays',
-            children: <TagsMainArea handleEdit={handleEdit} />,
+            children: loading ? (
+              <Loading />
+            ) : (
+              <TagsMainArea handleEdit={handleEdit} data={list} />
+            ),
           }, // remember to pass the key prop
         ]}
       />

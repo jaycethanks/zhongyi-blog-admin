@@ -1,7 +1,8 @@
 import { Button, Card, Input, message, Tabs } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { getCounts, newColumn } from '@/services/api/content';
+import Loading from '@/components/Loading';
+import { getColumns, getCounts, newColumn } from '@/services/api/content';
 import { SearchOutlined } from '@ant-design/icons';
 import { useRequest } from '@umijs/max';
 
@@ -29,6 +30,9 @@ const PageTabs: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState<'add' | 'edit'>('add');
   const [initialValues, setInitialValues] = useState<API.Column>();
+  const [list, setList] = useState<API.Columns>([]);
+  const [count, setCount] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
   const handleEdit = (columnRecord: API.Column) => {
     console.log('[columnRecord]: ', columnRecord);
     setInitialValues(columnRecord);
@@ -41,6 +45,31 @@ const PageTabs: React.FC = () => {
     setOpen(true);
   };
 
+  const loadData = async () => {
+    const loadColumns = async () => {
+      const res = await getColumns();
+      if (!res.data) {
+        message.error(res.message);
+      }
+      setList(res.data);
+    };
+
+    const loadColCount = async () => {
+      const res = await getCounts('columns');
+      if (res.code !== 0) {
+        message.error(res.message);
+      }
+      setCount(res.data);
+    };
+
+    setLoading(true);
+    Promise.allSettled([loadColumns(), loadColCount()]).finally(() => {
+      setLoading(false);
+    });
+  };
+  useEffect(() => {
+    loadData();
+  }, []);
   const onValidateFinish = async (values: any) => {
     const res = await newColumn(values);
     if (res.code === 0) {
@@ -49,11 +78,8 @@ const PageTabs: React.FC = () => {
     } else {
       message.error(res.message);
     }
+    loadData();
   };
-
-  const { data } = useRequest(() => {
-    return getCounts('columns');
-  });
 
   return (
     <>
@@ -61,9 +87,13 @@ const PageTabs: React.FC = () => {
         tabBarExtraContent={<RightOperation handleAdd={handleAdd} />}
         items={[
           {
-            label: `专栏(${data ?? 'querying...'})`,
+            label: `专栏(${loading ? 'querying...' : count})`,
             key: 'essays',
-            children: <ColumnMainArea handleEdit={handleEdit} />,
+            children: loading ? (
+              <Loading />
+            ) : (
+              <ColumnMainArea handleEdit={handleEdit} data={list} />
+            ),
           }, // remember to pass the key prop
         ]}
       />

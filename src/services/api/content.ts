@@ -3,7 +3,11 @@ import { request } from '@umijs/max';
 /** 获取当前的用户 GET /api/currentUser */
 
 export async function newColumn(body: any, options?: { [key: string]: any }) {
-  return request<any>('/api/admin/column/create', {
+  return request<{
+    code: number;
+    message: string;
+    data: any;
+  }>('/api/admin/column/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -16,13 +20,19 @@ export async function newColumn(body: any, options?: { [key: string]: any }) {
 export async function getColumns() {
   return request<{
     data: API.Columns;
+    code: number;
+    message: string;
   }>('/api/admin/column/findall', {
     method: 'GET',
   });
 }
 
 export async function newTag(body: any, options?: { [key: string]: any }) {
-  return request<any>('/api/admin/tag/create', {
+  return request<{
+    code: number;
+    message: string;
+    data: any;
+  }>('/api/admin/tag/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -33,6 +43,8 @@ export async function newTag(body: any, options?: { [key: string]: any }) {
 }
 export async function getTags() {
   return request<{
+    code: number;
+    message: string;
     data: API.Tags;
   }>('/api/admin/tag/findall', {
     method: 'GET',
@@ -40,7 +52,11 @@ export async function getTags() {
 }
 
 export async function newCategory(body: any, options?: { [key: string]: any }) {
-  return request<any>('/api/admin/category/create', {
+  return request<{
+    code: number;
+    message: string;
+    data: any;
+  }>('/api/admin/category/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -52,7 +68,9 @@ export async function newCategory(body: any, options?: { [key: string]: any }) {
 
 export async function getCategorys() {
   return request<{
-    data: API.Tags;
+    data: API.Categorys;
+    code: number;
+    message: string;
   }>('/api/admin/category/findall', {
     method: 'GET',
   });
@@ -60,6 +78,8 @@ export async function getCategorys() {
 
 export async function getArticleList() {
   return request<{
+    code: number;
+    message: string;
     data: API.ArticleList;
   }>('/api/admin/articlelist', {
     method: 'GET',
@@ -68,6 +88,8 @@ export async function getArticleList() {
 
 export async function getArticleByid(artid: string) {
   return request<{
+    code: number;
+    message: string;
     data: API.EditorArticle;
   }>('/api/admin/getArticleByid', {
     method: 'GET',
@@ -80,6 +102,8 @@ export async function getCounts(
 ) {
   return request<{
     data: number;
+    code: number;
+    message: string;
   }>('/api/admin/content/getCounts', {
     method: 'GET',
     params: { type },
