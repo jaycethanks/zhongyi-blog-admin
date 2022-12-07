@@ -52,6 +52,9 @@ const NewColumnModal: React.FC<NewColumnModalProps> = ({
         width={'40rem'}
       >
         <Form
+          initialValues={{
+            visible: true,
+          }}
           form={form}
           name='basic'
           labelCol={{ span: 4 }}

@@ -51,6 +51,7 @@ const NewTagModal: React.FC<NewCateModalProps> = ({
         <Form
           form={form}
           name='basic'
+          initialValues={{ visible: true }}
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 20 }}
           onFinish={(values) => onValidateFinish(values)}

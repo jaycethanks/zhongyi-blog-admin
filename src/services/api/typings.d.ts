@@ -2,6 +2,25 @@
 /* eslint-disable */
 
 declare namespace API {
+  type SubmitArticle = {
+    artid?: string;
+    title: string;
+    content: string;
+    category: string;
+    tags: string[];
+    cover: string;
+    column: string;
+    isbanner: boolean;
+    description: string;
+    password: string;
+    visible: boolean;
+  };
+  type CommonRes = {
+    code: number;
+    data?: { access_token: string };
+    success: boolean;
+    message: string;
+  };
   type LoginForm = {
     account: string;
     password: string;
@@ -40,6 +59,10 @@ declare namespace API {
     name?: string;
     description?: string;
     visible: boolean;
+
+    sort?: number;
+    relateCount?: number;
+    userid?: string;
   };
 
   type Categorys = Category[];

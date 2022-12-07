@@ -3,16 +3,17 @@ import React from 'react';
 import { useRequest } from 'umi';
 
 import Loading from '@/components/Loading';
-import { getTags } from '@/services/api/contentManage';
+import { getTags } from '@/services/api/content';
 
 const TagsMainArea: React.FC<{ handleEdit: (tagRecord: API.Tag) => void }> = ({
   handleEdit,
 }) => {
   const { data, error, loading } = useRequest(() => {
+    console.log('refresh');
     return getTags();
   });
 
-  const columns = [
+  const columns: any = [
     {
       title: '序号',
       dataIndex: '',
@@ -43,7 +44,6 @@ const TagsMainArea: React.FC<{ handleEdit: (tagRecord: API.Tag) => void }> = ({
       key: 'x',
       width: '8rem',
       render: (record: API.Tag) => {
-        console.log('[record]: ', record);
         return (
           <>
             <a onClick={() => handleEdit(record)}>编辑</a>

@@ -3,8 +3,9 @@ import React from 'react';
 import { useRequest } from 'umi';
 
 import Loading from '@/components/Loading';
-import { getCategorys } from '@/services/api/contentManage';
+import { getCategorys } from '@/services/api/content';
 
+import type { ColumnsType } from 'antd/es/table';
 const TagsMainArea: React.FC<{
   handleEdit: (categoryRecord: API.Category) => void;
 }> = ({ handleEdit }) => {
@@ -12,11 +13,18 @@ const TagsMainArea: React.FC<{
     return getCategorys();
   });
 
-  const columns = [
+  interface DataType {
+    key: React.Key;
+    name: string;
+    description: string;
+    visible: boolean;
+  }
+  // const columns: ColumnsType<DataType> = [
+  const columns: any = [
     {
       title: '序号',
       dataIndex: '',
-      key: '',
+      key: 'no',
       render: (_: any, __: any, index: number) => {
         return <span>{++index}</span>;
       },
@@ -48,7 +56,7 @@ const TagsMainArea: React.FC<{
       dataIndex: '',
       key: 'x',
       width: '8rem',
-      render: (record: API.Tag) => {
+      render: (record: API.Category) => {
         return (
           <>
             <a onClick={() => handleEdit(record)}>编辑</a>
@@ -63,6 +71,7 @@ const TagsMainArea: React.FC<{
   if (loading) {
     return <Loading />;
   } else {
+    console.log('[data]: ', data);
     return <Table rowKey='catid' dataSource={data} columns={columns} />;
   }
 };

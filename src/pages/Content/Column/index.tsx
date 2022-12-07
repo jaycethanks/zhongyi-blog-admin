@@ -1,7 +1,7 @@
-import { Button, Card, Input, Tabs } from 'antd';
+import { Button, Card, Input, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 
-import { getCounts } from '@/services/api/contentManage';
+import { getCounts, newColumn } from '@/services/api/content';
 import { SearchOutlined } from '@ant-design/icons';
 import { useRequest } from '@umijs/max';
 
@@ -41,9 +41,14 @@ const PageTabs: React.FC = () => {
     setOpen(true);
   };
 
-  const onValidateFinish = (values: any) => {
-    console.log('[values]: ', values);
-    console.log('onFinish');
+  const onValidateFinish = async (values: any) => {
+    const res = await newColumn(values);
+    if (res.code === 0) {
+      message.success(res.message);
+      setOpen(false);
+    } else {
+      message.error(res.message);
+    }
   };
 
   const { data } = useRequest(() => {

@@ -8,7 +8,8 @@ import { useRequest } from 'umi';
 
 import FormItemUpload from '@/components/FormItemUpload';
 import Loading from '@/components/Loading';
-import { getArticleByid } from '@/services/api/contentManage';
+import { create as createArticle } from '@/services/api/article';
+import { getArticleByid } from '@/services/api/content';
 import gfm from '@bytemd/plugin-gfm';
 import { Editor, Viewer } from '@bytemd/react';
 
@@ -26,7 +27,7 @@ const plugins = [
 
 const NewArticle = () => {
   const [title, setTitle] = useState('');
-  const [articleContent, setArticleContent] = useState('');
+  const [content, setContent] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   const { artid } = useParams();
   const [formData, setFormData] = useState<any>();
@@ -41,7 +42,7 @@ const NewArticle = () => {
       if (data) {
         const { title, content, artid: _artid, ...rest } = data;
         setTitle(title);
-        setArticleContent(content);
+        setContent(content);
         setFormData(rest);
       }
     }, [data]);
@@ -50,11 +51,17 @@ const NewArticle = () => {
       return <Loading />;
     }
   }
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
+    const res = await createArticle({
+      artid: artid ? artid : undefined,
+      title,
+      content,
+      ...values,
+    });
     console.log('[artid]: ', artid);
     console.log('[title]: ', title);
     console.log('[form]: ', values);
-    console.log('[articleContent]: ', articleContent);
+    console.log('[content]: ', content);
     console.log('onFinish');
   };
   const onFinishFailed = () => {
@@ -83,6 +90,9 @@ const NewArticle = () => {
           onFinish={(values) => onFinish(values)}
           onFinishFailed={onFinishFailed}
           autoComplete='off'
+          initialValues={{
+            visible: true,
+          }}
         >
           <Form.Item
             label='分类'
@@ -200,10 +210,10 @@ const NewArticle = () => {
       {/* markdown 编辑器 */}
       <div className={styles.main}>
         <Editor
-          value={articleContent}
+          value={content}
           plugins={plugins}
           onChange={(v) => {
-            setArticleContent(v);
+            setContent(v);
           }}
         />
       </div>

@@ -6,7 +6,7 @@ import { request } from '@umijs/max';
 export async function currentUser(options?: { [key: string]: any }) {
   return request<{
     data: API.CurrentUser;
-  }>('/api/currentUser', {
+  }>('/api/admin/currentUser', {
     headers: {
       'Content-Type': 'application/json',
       Authorization: token.get() as string,
@@ -18,7 +18,7 @@ export async function currentUser(options?: { [key: string]: any }) {
 
 /** 退出登录接口 POST /api/login/outLogin */
 export async function outLogin(options?: { [key: string]: any }) {
-  return request<Record<string, any>>('/api/login/outLogin', {
+  return request<Record<string, any>>('/api/admin/login/outLogin', {
     method: 'POST',
     ...(options || {}),
   });
@@ -29,7 +29,7 @@ export async function login(
   body: API.LoginForm,
   options?: { [key: string]: any },
 ) {
-  return request<API.LoginRes>('/api/login/account', {
+  return request<API.LoginRes>('/api/admin/login/account', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

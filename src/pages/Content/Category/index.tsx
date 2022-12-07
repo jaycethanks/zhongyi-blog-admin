@@ -1,7 +1,8 @@
-import { Button, Card, Tabs } from 'antd';
+import { Button, Card, message, Tabs } from 'antd';
+import { result } from 'lodash';
 import React, { useState } from 'react';
 
-import { getCounts } from '@/services/api/contentManage';
+import { getCounts, newCategory } from '@/services/api/content';
 import { useRequest } from '@umijs/max';
 
 import CategoryMainArea from './CategoryMainArea';
@@ -24,9 +25,14 @@ const PageTabs: React.FC = () => {
     setOpen(true);
   };
 
-  const onValidateFinish = (values: any) => {
-    console.log('[values]: ', values);
-    console.log('onFinish');
+  const onValidateFinish = async (values: any) => {
+    const res = await newCategory(values);
+    if (res.code === 0) {
+      message.success(res.message);
+      setOpen(false);
+    } else {
+      message.error(res.message);
+    }
   };
 
   const { data } = useRequest(() => {

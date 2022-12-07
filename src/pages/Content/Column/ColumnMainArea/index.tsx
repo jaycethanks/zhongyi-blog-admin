@@ -3,7 +3,7 @@ import React from 'react';
 import { useRequest } from 'umi';
 
 import Loading from '@/components/Loading';
-import { getColumns } from '@/services/api/contentManage';
+import { getColumns } from '@/services/api/content';
 
 import styles from './index.module.less';
 
@@ -62,12 +62,7 @@ const ColumnMainArea: React.FC<{
               )
             }
             title={
-              <a
-                style={{ fontWeight: 600, fontSize: '1.1rem' }}
-                href='https://ant.design'
-              >
-                {item.name}
-              </a>
+              <a style={{ fontWeight: 600, fontSize: '1.1rem' }}>{item.name}</a>
             }
             description={item.description}
           />

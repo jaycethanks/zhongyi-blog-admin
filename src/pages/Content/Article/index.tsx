@@ -1,7 +1,7 @@
 import { Card, Input, Tabs } from 'antd';
 import React from 'react';
 
-import { getCounts } from '@/services/api/contentManage';
+import { getCounts } from '@/services/api/content';
 import { SearchOutlined } from '@ant-design/icons';
 import { useRequest } from '@umijs/max';
 

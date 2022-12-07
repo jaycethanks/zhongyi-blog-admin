@@ -16,8 +16,15 @@ export default {
       changeOrigin: true,
       logLevel: 'debug',
       secure: false,
-      pathRewrite: { '^/api': '/admin' },
+      pathRewrite: { '^/api': '' },
     },
+    // '/api/': {
+    //   target: 'http://localhost:4567/',
+    //   changeOrigin: true,
+    //   logLevel: 'debug',
+    //   secure: false,
+    //   pathRewrite: { '^/api': '' },
+    // },
   },
   /**
    * @name 详细的代理配置
