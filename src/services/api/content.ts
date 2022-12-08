@@ -75,14 +75,19 @@ export async function getCategorys() {
     method: 'GET',
   });
 }
-
-export async function getArticleList() {
+/**
+ *
+ * @param type 1: 发布 0:草稿
+ * @returns
+ */
+export async function getArticleList(type: 0 | 1) {
   return request<{
     code: number;
     message: string;
     data: API.ArticleList;
-  }>('/api/admin/articlelist', {
+  }>('/api/admin/article/findall', {
     method: 'GET',
+    params: { type },
   });
 }
 
@@ -91,7 +96,7 @@ export async function getArticleByid(artid: string) {
     code: number;
     message: string;
     data: API.EditorArticle;
-  }>('/api/admin/getArticleByid', {
+  }>('/api/admin/article/findById', {
     method: 'GET',
     params: { artid },
   });

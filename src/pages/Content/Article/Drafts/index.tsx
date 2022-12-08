@@ -11,7 +11,7 @@ import styles from './index.module.less';
 const Essays: React.FC = () => {
   // const [list, setList] = useState<API.Columns>([]);
   const { data, error, loading } = useRequest(() => {
-    return getArticleList();
+    return getArticleList(0);
   });
 
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ const Essays: React.FC = () => {
                   width: '12rem',
                 }}
               >
-                {item.title}
+                NO COVER
               </div>
             )
           }

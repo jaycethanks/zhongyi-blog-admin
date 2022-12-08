@@ -1,6 +1,6 @@
 import 'bytemd/dist/index.css';
 
-import { Button, Form, Input, Popover, Switch } from 'antd';
+import { Button, Form, Input, message, Popover, Switch } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import { ReactElement, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { create as createArticle } from '@/services/api/article';
 import { getArticleByid } from '@/services/api/content';
 import gfm from '@bytemd/plugin-gfm';
 import { Editor, Viewer } from '@bytemd/react';
+import { history } from '@umijs/max';
 
 import FormItemAddTag from './components/FormItemAddTag';
 import FormItemCategory from './components/FormItemCategory';
@@ -30,6 +31,8 @@ const NewArticle = () => {
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState('');
   const [isEdit, setIsEdit] = useState(false);
+  const [form] = Form.useForm();
+
   const { artid } = useParams();
   const [formData, setFormData] = useState<any>();
   if (artid) {
@@ -52,34 +55,41 @@ const NewArticle = () => {
       return <Loading />;
     }
   }
-  const onFinish = async (values: any) => {
+
+  /**
+   *
+   * @param type 1: 发布 0:草稿
+   */
+  const onSubmit = async (type: 0 | 1) => {
+    await form.validateFields();
+    const formValues = await form.getFieldsValue();
     const res = await createArticle({
       artid: artid ? artid : undefined,
       title,
       content,
-      ...values,
+      status: type, // 发布
+      ...formValues,
     });
-    console.log('[artid]: ', artid);
-    console.log('[title]: ', title);
-    console.log('[form]: ', values);
-    console.log('[content]: ', content);
-    console.log('onFinish');
+    if (res.code === 0) {
+      message.success(res.message);
+      setOpen(false);
+      const urlParams = new URL(window.location.href).searchParams;
+
+      history.push(urlParams.get('redirect') || '/');
+    } else {
+      message.error(res.message);
+    }
   };
+
   const onFinishFailed = () => {
-    console.log('onFinishFailed');
     setOpen(false);
   };
   const PopoverContent: React.FC = (_rest) => {
-    const [form] = Form.useForm();
     useEffect(() => {
       if (formData) {
         form.setFieldsValue(formData);
       }
     }, [formData]);
-    const onSubmit = async () => {
-      await form.validateFields();
-      form.submit(); //将会触发 onFinish 方法
-    };
 
     //  发布 PopoverForm 表单
     return (
@@ -89,7 +99,6 @@ const NewArticle = () => {
           name='basic'
           labelCol={{ span: 5 }}
           wrapperCol={{ span: 19 }}
-          onFinish={(values) => onFinish(values)}
           onFinishFailed={onFinishFailed}
           autoComplete='off'
           initialValues={{
@@ -165,10 +174,13 @@ const NewArticle = () => {
           </Form.Item>
         </Form>
         <div className={styles['footer']}>
-          <Button ghost type='primary' onClick={() => setOpen(false)}>
+          <Button ghost danger type='dashed' onClick={() => setOpen(false)}>
             取消
           </Button>
-          <Button type='primary' onClick={onSubmit}>
+          <Button ghost type='primary' onClick={() => onSubmit(0)}>
+            保存到草稿箱
+          </Button>
+          <Button type='primary' onClick={() => onSubmit(1)}>
             {isEdit ? '确定更新' : '确定发布'}
           </Button>
         </div>
@@ -189,9 +201,6 @@ const NewArticle = () => {
         />
         {/* 右侧草稿箱 + 发布 */}
         <div className={styles['btn-group']}>
-          <Button ghost type='primary'>
-            保存到草稿箱
-          </Button>
           <Popover
             open={open}
             transitionName=''

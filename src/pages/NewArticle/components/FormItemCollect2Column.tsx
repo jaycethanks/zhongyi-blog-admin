@@ -22,6 +22,7 @@ const App: React.FC<ColumnProps> = ({ value, onChange }) => {
   return (
     <Select
       value={value}
+      allowClear
       onChange={handleChange}
       className={styles['form-item-column']}
       showSearch
