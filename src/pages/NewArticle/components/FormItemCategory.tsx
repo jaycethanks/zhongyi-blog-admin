@@ -12,6 +12,7 @@ interface CategoryProps {
   onChange?: (value: string) => void;
 }
 const App: React.FC<CategoryProps> = ({ value, onChange }) => {
+  console.log('[value]: ', value);
   type RadioGroupOpt = {
     label: string;
     value: string;
@@ -42,7 +43,11 @@ const App: React.FC<CategoryProps> = ({ value, onChange }) => {
         className={styles['radio-group']}
       >
         {options.map((it) => {
-          return <Radio.Button value={it.value}>{it.label}</Radio.Button>;
+          return (
+            <Radio.Button key={it.value} value={it.value}>
+              {it.label}
+            </Radio.Button>
+          );
         })}
       </Radio.Group>
     </>

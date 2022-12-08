@@ -72,11 +72,12 @@ declare namespace API {
     title: string;
     description?: string;
     cover?: string;
-    createAt: string;
+    createdAt: string;
     readers?: number;
-    linking?: number;
+    liking?: number;
     visible: boolean;
     comments?: number;
+    password?: string;
   };
   type ArticleList = ArticleInfo[];
 

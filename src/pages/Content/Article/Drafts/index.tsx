@@ -62,6 +62,7 @@ const Essays: React.FC = () => {
               编辑
             </a>,
             [<a key='list-item-delete'>删除</a>],
+            item.password ? <div>阅读密码：{item.password}</div> : '',
           ]}
         >
           <List.Item.Meta

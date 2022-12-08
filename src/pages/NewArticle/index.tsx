@@ -86,6 +86,7 @@ const NewArticle = () => {
   };
   const PopoverContent: React.FC = (_rest) => {
     useEffect(() => {
+      console.log('[formData]: ', formData);
       if (formData) {
         form.setFieldsValue(formData);
       }
@@ -181,7 +182,7 @@ const NewArticle = () => {
             保存到草稿箱
           </Button>
           <Button type='primary' onClick={() => onSubmit(1)}>
-            {isEdit ? '确定更新' : '确定发布'}
+            确定发布
           </Button>
         </div>
       </>

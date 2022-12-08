@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 
 import Loading from '@/components/Loading';
 import { getCategorys, getCounts, newCategory } from '@/services/api/content';
-import { useRequest } from '@umijs/max';
 
 import CategoryMainArea from './CategoryMainArea';
 import NewCategoryModal from './NewCategoryModal/index';

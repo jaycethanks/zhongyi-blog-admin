@@ -6,7 +6,12 @@ import { useRequest } from 'umi';
 import Loading from '@/components/Loading';
 import { getArticleList } from '@/services/api/content';
 import {
-    EyeInvisibleOutlined, EyeOutlined, LikeOutlined, MessageOutlined, ReadOutlined, StarOutlined
+  EyeInvisibleOutlined,
+  EyeOutlined,
+  LikeOutlined,
+  MessageOutlined,
+  ReadOutlined,
+  StarOutlined,
 } from '@ant-design/icons';
 
 import styles from './index.module.less';
@@ -111,6 +116,7 @@ const Essays: React.FC = () => {
               text=''
               key='list-vertical-message'
             />,
+            item.password ? <div>阅读密码：{item.password}</div> : '',
           ]}
         >
           <List.Item.Meta

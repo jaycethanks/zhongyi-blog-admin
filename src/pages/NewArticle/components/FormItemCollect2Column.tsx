@@ -12,6 +12,7 @@ interface ColumnProps {
 }
 const App: React.FC<ColumnProps> = ({ value, onChange }) => {
   const handleChange = (value: string) => {
+    console.log('[value]: ', value);
     onChange?.(value);
   };
 
