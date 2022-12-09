@@ -38,7 +38,7 @@ const App: React.FC<CategoryProps> = ({ value, onChange }) => {
   return (
     <>
       <Radio.Group
-        defaultValue={value}
+        value={value}
         onChange={handleOnChange}
         className={styles['radio-group']}
       >

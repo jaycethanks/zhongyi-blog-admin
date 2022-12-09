@@ -10,10 +10,10 @@ declare namespace API {
     tags: string[];
     cover: string;
     column: string;
-    isbanner: boolean;
+    banner: 0 | 1;
     description: string;
     password: string;
-    visible: boolean;
+    visible: 0 | 1;
   };
   type CommonRes = {
     code: number;
@@ -37,28 +37,28 @@ declare namespace API {
     name?: string;
     description?: string;
     cover?: string;
-    visible: boolean;
+    visible: 0 | 1;
   };
   type Columns = Column[];
 
   type Tag = {
     tagid?: string;
     name?: string;
-    visible: boolean;
+    visible: 0 | 1;
   };
   type Tags = Tag[];
 
   type Tag = {
     tagid?: string;
     name?: string;
-    visible: boolean;
+    visible: 0 | 1;
   };
 
   type Category = {
     catid?: string;
     name?: string;
     description?: string;
-    visible: boolean;
+    visible: 0 | 1;
 
     sort?: number;
     relateCount?: number;
@@ -75,7 +75,7 @@ declare namespace API {
     createdAt: string;
     readers?: number;
     liking?: number;
-    visible: boolean;
+    visible: 0 | 1;
     comments?: number;
     password?: string;
   };
@@ -87,11 +87,13 @@ declare namespace API {
     content: string;
     description?: string;
     cover?: string;
-    visible: boolean;
-    category: string;
-    tags: string[];
-    column: string;
-    isbanner: boolean;
+    visible: 0 | 1;
+    category?: string;
+    tags: string[] | [] | Array<{ tagid: string }>;
+    column?: string;
+    banner: 0 | 1;
     password: string;
+    colid?: string;
+    catid?: string;
   };
 }

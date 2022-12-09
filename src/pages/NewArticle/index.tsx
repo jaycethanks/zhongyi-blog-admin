@@ -8,7 +8,7 @@ import { useRequest } from 'umi';
 
 import FormItemUpload from '@/components/FormItemUpload';
 import Loading from '@/components/Loading';
-import { create as createArticle } from '@/services/api/article';
+import { upsert as createArticle } from '@/services/api/article';
 import { getArticleByid } from '@/services/api/content';
 import gfm from '@bytemd/plugin-gfm';
 import { Editor, Viewer } from '@bytemd/react';
@@ -44,10 +44,31 @@ const NewArticle = () => {
     useEffect(() => {
       setIsEdit(true);
       if (data) {
-        const { title, content, artid: _artid, ...rest } = data;
+        const {
+          title,
+          content,
+          artid,
+          visible,
+          banner,
+          category,
+          catid,
+          column,
+          colid,
+          tags,
+          ...rest
+        } = data;
         setTitle(title);
         setContent(content);
-        setFormData(rest);
+        // 数据转换一下,数据库直接返回数据格式不可用
+        const editData = {
+          visible: visible === 1 ? true : false,
+          banner: banner === 1 ? true : false,
+          category: catid,
+          column: colid,
+          tags: (tags as Array<{ tagid: string }>).map((tag) => tag.tagid),
+          ...rest,
+        };
+        setFormData(editData);
       }
     }, [data]);
 
@@ -63,12 +84,20 @@ const NewArticle = () => {
   const onSubmit = async (type: 0 | 1) => {
     await form.validateFields();
     const formValues = await form.getFieldsValue();
+    const { banner, visible, ...rest } = formValues;
+    if (!title) {
+      message.error('标题不可为空');
+      return;
+    }
+
     const res = await createArticle({
       artid: artid ? artid : undefined,
       title,
       content,
       status: type, // 发布
-      ...formValues,
+      visible: visible ? 1 : 0,
+      banner: banner ? 1 : 0,
+      ...rest,
     });
     if (res.code === 0) {
       message.success(res.message);
@@ -86,7 +115,6 @@ const NewArticle = () => {
   };
   const PopoverContent: React.FC = (_rest) => {
     useEffect(() => {
-      console.log('[formData]: ', formData);
       if (formData) {
         form.setFieldsValue(formData);
       }
@@ -104,6 +132,7 @@ const NewArticle = () => {
           autoComplete='off'
           initialValues={{
             visible: true,
+            banner: false,
           }}
         >
           <Form.Item
@@ -138,7 +167,7 @@ const NewArticle = () => {
 
           <Form.Item
             label='发布到Banner'
-            name='isbanner'
+            name='banner'
             valuePropName='checked'
             rules={[{ required: false }]}
           >

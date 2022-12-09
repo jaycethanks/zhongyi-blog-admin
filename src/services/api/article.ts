@@ -9,11 +9,11 @@ export async function get() {
   });
 }
 
-export async function create(
+export async function upsert(
   body: API.SubmitArticle,
   options?: { [key: string]: any },
 ) {
-  return request<API.CommonRes>('/api/admin/article/create', {
+  return request<API.CommonRes>('/api/admin/article/upsert', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
