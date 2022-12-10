@@ -2,7 +2,7 @@ import { Button, Card, Input, message, Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import Loading from '@/components/Loading';
-import { getColumns, getCounts, newColumn } from '@/services/api/content';
+import { deleteColById, getColumns, getCounts, newColumn } from '@/services/api/content';
 import { SearchOutlined } from '@ant-design/icons';
 import { useRequest } from '@umijs/max';
 
@@ -33,6 +33,7 @@ const PageTabs: React.FC = () => {
   const [list, setList] = useState<API.Columns>([]);
   const [count, setCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
+
   const handleEdit = (columnRecord: API.Column) => {
     console.log('[columnRecord]: ', columnRecord);
     setInitialValues(columnRecord);
@@ -43,6 +44,19 @@ const PageTabs: React.FC = () => {
     setInitialValues(undefined);
     setType('add');
     setOpen(true);
+  };
+
+  const handleDelete = async (columnRecord: API.Column) => {
+    if (columnRecord.colid) {
+      const res = await deleteColById(columnRecord.colid);
+      if (res.code === 0) {
+        message.success(res.message);
+        setOpen(false);
+      } else {
+        message.error(res.message);
+      }
+      loadData();
+    }
   };
 
   const loadData = async () => {
@@ -71,7 +85,14 @@ const PageTabs: React.FC = () => {
     loadData();
   }, []);
   const onValidateFinish = async (values: any) => {
-    const res = await newColumn(values);
+    const { colid, cover, description, name, visible } = values;
+    const res = await newColumn({
+      colid,
+      cover,
+      description,
+      name,
+      visible: visible ? 1 : 0,
+    });
     if (res.code === 0) {
       message.success(res.message);
       setOpen(false);
@@ -92,7 +113,11 @@ const PageTabs: React.FC = () => {
             children: loading ? (
               <Loading />
             ) : (
-              <ColumnMainArea handleEdit={handleEdit} data={list} />
+              <ColumnMainArea
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+                data={list}
+              />
             ),
           }, // remember to pass the key prop
         ]}

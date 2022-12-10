@@ -56,7 +56,9 @@ const NewTagModal: React.FC<NewColumnModalProps> = ({
           }}
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 20 }}
-          onFinish={(values) => onValidateFinish(values)}
+          onFinish={(values) =>
+            onValidateFinish({ tagid: initialValues?.tagid, ...values })
+          }
           onFinishFailed={onFinishFailed}
           autoComplete='off'
         >

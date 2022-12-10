@@ -2,7 +2,9 @@ import { Button, Card, message, Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import Loading from '@/components/Loading';
-import { getCategorys, getCounts, newCategory } from '@/services/api/content';
+import {
+    deleteCateById, deleteTagById, getCategorys, getCounts, newCategory
+} from '@/services/api/content';
 
 import CategoryMainArea from './CategoryMainArea';
 import NewCategoryModal from './NewCategoryModal/index';
@@ -14,9 +16,9 @@ const PageTabs: React.FC = () => {
   const [list, setList] = useState<API.Categorys>([]);
   const [count, setCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-  const handleEdit = (tagRecord: API.Category) => {
-    if (tagRecord) {
-      setInitialValues(tagRecord);
+  const handleEdit = (categoryRecord: API.Category) => {
+    if (categoryRecord) {
+      setInitialValues(categoryRecord);
     }
     setType('edit');
     setOpen(true);
@@ -25,6 +27,19 @@ const PageTabs: React.FC = () => {
     setInitialValues(undefined);
     setType('add');
     setOpen(true);
+  };
+
+  const handleDelete = async (categoryRecord: API.Category) => {
+    if (categoryRecord.catid) {
+      const res = await deleteCateById(categoryRecord.catid);
+      if (res.code === 0) {
+        message.success(res.message);
+        setOpen(false);
+      } else {
+        message.error(res.message);
+      }
+      loadData();
+    }
   };
 
   const loadData = async () => {
@@ -55,7 +70,13 @@ const PageTabs: React.FC = () => {
   }, []);
 
   const onValidateFinish = async (values: any) => {
-    const res = await newCategory(values);
+    const { catid, description, name, visible } = values;
+    const res = await newCategory({
+      catid,
+      description,
+      name,
+      visible: visible ? 1 : 0,
+    });
     if (res.code === 0) {
       message.success(res.message);
       setOpen(false);
@@ -80,7 +101,11 @@ const PageTabs: React.FC = () => {
             children: loading ? (
               <Loading />
             ) : (
-              <CategoryMainArea handleEdit={handleEdit} data={list} />
+              <CategoryMainArea
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+                data={list}
+              />
             ),
           }, // remember to pass the key prop
         ]}

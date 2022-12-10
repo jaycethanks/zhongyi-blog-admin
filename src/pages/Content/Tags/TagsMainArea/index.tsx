@@ -3,8 +3,9 @@ import React from 'react';
 
 const TagsMainArea: React.FC<{
   handleEdit: (tagRecord: API.Tag) => void;
+  handleDelete: (tagRecord: API.Tag) => void;
   data: API.Tags;
-}> = ({ handleEdit, data }) => {
+}> = ({ handleEdit, handleDelete, data }) => {
   const columns: any = [
     {
       title: '序号',
@@ -40,7 +41,7 @@ const TagsMainArea: React.FC<{
           <>
             <a onClick={() => handleEdit(record)}>编辑</a>
             <Divider type='vertical' />
-            <a>删除</a>
+            <a onClick={() => handleDelete(record)}>删除</a>
           </>
         );
       },

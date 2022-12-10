@@ -59,7 +59,9 @@ const NewColumnModal: React.FC<NewColumnModalProps> = ({
           name='basic'
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 20 }}
-          onFinish={(values) => onValidateFinish(values)}
+          onFinish={(values) =>
+            onValidateFinish({ colid: initialValues?.colid, ...values })
+          }
           onFinishFailed={onFinishFailed}
           autoComplete='off'
         >

@@ -36,11 +36,11 @@ const App: React.FC<CoverProps> = ({ value, onChange }) => {
     }
     setPreviewImage(file.url || (file.preview as string));
   };
-
+  console.log('[FILE_UPLOAD_URL]: ', FILE_UPLOAD_URL);
   const props: UploadProps = {
     name: 'file',
     multiple: false,
-    action: 'http://localhost:4567/file/upload',
+    action: FILE_UPLOAD_URL,
     onChange(info) {
       const { status } = info.file;
       if (status !== 'uploading') {

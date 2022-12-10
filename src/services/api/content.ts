@@ -7,7 +7,7 @@ export async function newColumn(body: any, options?: { [key: string]: any }) {
     code: number;
     message: string;
     data: any;
-  }>('/api/admin/column/create', {
+  }>('/api/admin/column/upsert', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -27,12 +27,25 @@ export async function getColumns() {
   });
 }
 
+export async function deleteColById(colid: string) {
+  return request<{
+    data: API.Columns;
+    code: number;
+    message: string;
+  }>('/api/admin/column/delete', {
+    method: 'DELETE',
+    params: {
+      colid,
+    },
+  });
+}
+
 export async function newTag(body: any, options?: { [key: string]: any }) {
   return request<{
     code: number;
     message: string;
     data: any;
-  }>('/api/admin/tag/create', {
+  }>('/api/admin/tag/upsert', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -51,12 +64,25 @@ export async function getTags() {
   });
 }
 
+export async function deleteTagById(tagid: string) {
+  return request<{
+    data: API.Tags;
+    code: number;
+    message: string;
+  }>('/api/admin/tag/delete', {
+    method: 'DELETE',
+    params: {
+      tagid,
+    },
+  });
+}
+
 export async function newCategory(body: any, options?: { [key: string]: any }) {
   return request<{
     code: number;
     message: string;
     data: any;
-  }>('/api/admin/category/create', {
+  }>('/api/admin/category/upsert', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -75,6 +101,20 @@ export async function getCategorys() {
     method: 'GET',
   });
 }
+
+export async function deleteCateById(catid: string) {
+  return request<{
+    data: API.Tags;
+    code: number;
+    message: string;
+  }>('/api/admin/category/delete', {
+    method: 'DELETE',
+    params: {
+      catid,
+    },
+  });
+}
+
 /**
  *
  * @param type 1: 发布 0:草稿

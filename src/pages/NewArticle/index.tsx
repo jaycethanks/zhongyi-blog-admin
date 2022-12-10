@@ -4,7 +4,7 @@ import { Button, Form, Input, message, Popover, Switch } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import { ReactElement, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useRequest } from 'umi';
+import { useNavigate, useRequest } from 'umi';
 
 import FormItemUpload from '@/components/FormItemUpload';
 import Loading from '@/components/Loading';
@@ -32,7 +32,7 @@ const NewArticle = () => {
   const [content, setContent] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   const [form] = Form.useForm();
-
+  const navigate = useNavigate();
   const { artid } = useParams();
   const [formData, setFormData] = useState<any>();
   if (artid) {
@@ -102,9 +102,9 @@ const NewArticle = () => {
     if (res.code === 0) {
       message.success(res.message);
       setOpen(false);
-      const urlParams = new URL(window.location.href).searchParams;
-
-      history.push(urlParams.get('redirect') || '/');
+      // const urlParams = new URL(window.location.href).searchParams;
+      // history.push(urlParams.get('redirect') || '/');
+      navigate(-1);
     } else {
       message.error(res.message);
     }

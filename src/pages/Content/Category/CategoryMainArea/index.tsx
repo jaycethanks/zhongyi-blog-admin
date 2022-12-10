@@ -3,8 +3,9 @@ import React from 'react';
 
 const CategoryMainArea: React.FC<{
   handleEdit: (categoryRecord: API.Category) => void;
+  handleDelete: (categoryRecord: API.Category) => void;
   data: API.Categorys;
-}> = ({ handleEdit, data }) => {
+}> = ({ handleEdit, handleDelete, data }) => {
   const columns: any = [
     {
       title: '序号',
@@ -46,7 +47,7 @@ const CategoryMainArea: React.FC<{
           <>
             <a onClick={() => handleEdit(record)}>编辑</a>
             <Divider type='vertical' />
-            <a>删除</a>
+            <a onClick={() => handleDelete(record)}>删除</a>
           </>
         );
       },

@@ -54,7 +54,9 @@ const NewTagModal: React.FC<NewCateModalProps> = ({
           initialValues={{ visible: true }}
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 20 }}
-          onFinish={(values) => onValidateFinish(values)}
+          onFinish={(values) =>
+            onValidateFinish({ catid: initialValues?.catid, ...values })
+          }
           onFinishFailed={onFinishFailed}
           autoComplete='off'
         >

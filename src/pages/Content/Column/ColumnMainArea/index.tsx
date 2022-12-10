@@ -5,8 +5,9 @@ import styles from './index.module.less';
 
 const ColumnMainArea: React.FC<{
   handleEdit: (columnRecord: API.Column) => void;
+  handleDelete: (columnRecord: API.Column) => void;
   data: API.Columns;
-}> = ({ handleEdit, data }) => {
+}> = ({ handleEdit, handleDelete, data }) => {
   return (
     <List
       className='demo-loadmore-list'
@@ -18,7 +19,11 @@ const ColumnMainArea: React.FC<{
             <a key='list-item-edit' onClick={() => handleEdit(item)}>
               编辑
             </a>,
-            [<a key='list-item-delete'>删除</a>],
+            [
+              <a key='list-item-delete' onClick={() => handleDelete(item)}>
+                删除
+              </a>,
+            ],
           ]}
         >
           <List.Item.Meta

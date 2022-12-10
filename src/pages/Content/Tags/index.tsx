@@ -2,7 +2,7 @@ import { Button, Card, message, Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import Loading from '@/components/Loading';
-import { getCounts, getTags, newTag } from '@/services/api/content';
+import { deleteTagById, getCounts, getTags, newTag } from '@/services/api/content';
 
 import NewTagModal from './NewTagModal/index';
 import TagsMainArea from './TagsMainArea';
@@ -25,6 +25,18 @@ const PageTabs: React.FC = () => {
     setInitialValues(undefined);
     setType('add');
     setOpen(true);
+  };
+  const handleDelete = async (tagRecord: API.Tag) => {
+    if (tagRecord.tagid) {
+      const res = await deleteTagById(tagRecord.tagid);
+      if (res.code === 0) {
+        message.success(res.message);
+        setOpen(false);
+      } else {
+        message.error(res.message);
+      }
+      loadData();
+    }
   };
 
   const loadData = async () => {
@@ -55,7 +67,12 @@ const PageTabs: React.FC = () => {
   }, []);
 
   const onValidateFinish = async (values: any) => {
-    const res = await newTag(values);
+    const { tagid, name, visible } = values;
+    const res = await newTag({
+      tagid,
+      name,
+      visible: visible ? 1 : 0,
+    });
     if (res.code === 0) {
       message.success(res.message);
       setOpen(false);
@@ -80,7 +97,11 @@ const PageTabs: React.FC = () => {
             children: loading ? (
               <Loading />
             ) : (
-              <TagsMainArea handleEdit={handleEdit} data={list} />
+              <TagsMainArea
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+                data={list}
+              />
             ),
           }, // remember to pass the key prop
         ]}
