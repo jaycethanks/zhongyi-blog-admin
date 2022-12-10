@@ -2,6 +2,7 @@
 import { message, Upload } from 'antd';
 import React, { useEffect, useState } from 'react';
 
+import token from '@/utils/token';
 import { InboxOutlined } from '@ant-design/icons';
 
 import styles from './index.module.less';
@@ -36,11 +37,13 @@ const App: React.FC<CoverProps> = ({ value, onChange }) => {
     }
     setPreviewImage(file.url || (file.preview as string));
   };
-  console.log('[FILE_UPLOAD_URL]: ', FILE_UPLOAD_URL);
   const props: UploadProps = {
     name: 'file',
     multiple: false,
     action: FILE_UPLOAD_URL,
+    headers: {
+      Authorization: 'Bearer ' + token.get(),
+    },
     onChange(info) {
       const { status } = info.file;
       if (status !== 'uploading') {
