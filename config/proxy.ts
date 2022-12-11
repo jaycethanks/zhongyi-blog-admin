@@ -18,13 +18,13 @@ export default {
       secure: false,
       pathRewrite: { '^/api': '' },
     },
-    // '/api/': {
-    //   target: 'http://localhost:4567/',
-    //   changeOrigin: true,
-    //   logLevel: 'debug',
-    //   secure: false,
-    //   pathRewrite: { '^/api': '' },
-    // },
+    '/file/': {
+      target: 'http://localhost:8989/',
+      changeOrigin: true,
+      logLevel: 'debug',
+      secure: false,
+      pathRewrite: { '^/file': '' },
+    },
   },
   /**
    * @name 详细的代理配置

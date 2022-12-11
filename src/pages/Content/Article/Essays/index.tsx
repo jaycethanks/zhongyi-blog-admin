@@ -6,12 +6,7 @@ import { useRequest } from 'umi';
 import Loading from '@/components/Loading';
 import { getArticleList } from '@/services/api/content';
 import {
-  EyeInvisibleOutlined,
-  EyeOutlined,
-  LikeOutlined,
-  MessageOutlined,
-  ReadOutlined,
-  StarOutlined,
+    EyeInvisibleOutlined, EyeOutlined, LikeOutlined, MessageOutlined, ReadOutlined, StarOutlined
 } from '@ant-design/icons';
 
 import styles from './index.module.less';
@@ -62,24 +57,6 @@ const Essays: React.FC = () => {
       dataSource={data}
       renderItem={(item) => (
         <List.Item
-          extra={
-            item.cover ? (
-              <div
-                className={styles['cover']}
-                style={{ backgroundImage: `url(${item.cover})` }}
-              ></div>
-            ) : (
-              <div
-                className={styles['cover-holder']}
-                style={{
-                  height: '6rem',
-                  width: '12rem',
-                }}
-              >
-                NO COVER
-              </div>
-            )
-          }
           actions={[
             <a key='list-item-edit' onClick={() => handleEdit(item.artid)}>
               编辑
@@ -129,6 +106,24 @@ const Essays: React.FC = () => {
               </a>
             }
             description={item.description}
+            avatar={
+              item.cover ? (
+                <div
+                  className={styles['cover']}
+                  style={{ backgroundImage: `url(${item.cover})` }}
+                ></div>
+              ) : (
+                <div
+                  className={styles['cover-holder']}
+                  style={{
+                    height: '6rem',
+                    width: '12rem',
+                  }}
+                >
+                  NO COVER
+                </div>
+              )
+            }
           />
           {/* <div>content</div> */}
           {/* <span style={{ width: '4rem', textAlign: 'start' }}>

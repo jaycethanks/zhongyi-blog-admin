@@ -32,6 +32,7 @@ const App: React.FC<CoverProps> = ({ value, onChange }) => {
   }, [value]);
 
   const handlePreview = async (file: UploadFile) => {
+    console.log('[file.url]: ', file.url);
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as RcFile);
     }
@@ -64,7 +65,7 @@ const App: React.FC<CoverProps> = ({ value, onChange }) => {
   };
 
   return (
-    <Dragger {...props} className={styles['form-item-cover']}>
+    <Dragger accept='' {...props} className={styles['form-item-cover']}>
       <div
         className={styles['upload-wrapper']}
         style={{ backgroundImage: `url(${previewImage})` }}
