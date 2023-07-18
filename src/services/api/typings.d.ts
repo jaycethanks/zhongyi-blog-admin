@@ -2,6 +2,11 @@
 /* eslint-disable */
 
 declare namespace API {
+  type submitAbout = {
+    avatar: string;
+    msg: string;
+    links: string;
+  };
   type SubmitArticle = {
     artid?: string;
     title: string;

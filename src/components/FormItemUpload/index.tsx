@@ -22,8 +22,12 @@ const { Dragger } = Upload;
 interface CoverProps {
   value?: string;
   onChange?: (value: string) => void;
+  square?: boolean; // 是否是正方型
+  title?: string; // title
+  subTitlt?: string; // subTitlt
+  UploadProp?:UploadProps
 }
-const App: React.FC<CoverProps> = ({ value, onChange }) => {
+const App: React.FC<CoverProps> = ({ value, onChange, square, title, subTitlt,UploadProp }) => {
   const [previewImage, setPreviewImage] = useState<string>();
 
   useEffect(() => {
@@ -32,7 +36,6 @@ const App: React.FC<CoverProps> = ({ value, onChange }) => {
   }, [value]);
 
   const handlePreview = async (file: UploadFile) => {
-    console.log('[file.url]: ', file.url);
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as RcFile);
     }
@@ -46,6 +49,7 @@ const App: React.FC<CoverProps> = ({ value, onChange }) => {
       Authorization: 'Bearer ' + token.get(),
     },
     onChange(info) {
+      console.log('[info]: ',info)
       const { status } = info.file;
       if (status !== 'uploading') {
         console.log(info.file, info.fileList);
@@ -63,19 +67,21 @@ const App: React.FC<CoverProps> = ({ value, onChange }) => {
       console.log('Dropped files', e.dataTransfer.files);
     },
   };
-
+  const className = `${square ? styles['form-item-cover-square'] : ''} ${styles['form-item-cover']}`
   return (
-    <Dragger accept='' {...props} className={styles['form-item-cover']}>
-      <div
-        className={styles['upload-wrapper']}
-        style={{ backgroundImage: `url(${previewImage})` }}
-      >
+    <Dragger
+      accept=""
+      {...props}
+      className={className}
+      {...UploadProp}
+    >
+      <div className={styles['upload-wrapper']} style={{ backgroundImage: `url(${previewImage})` }}>
         <div className={styles['top-level-desc']}>
           <p style={{ fontSize: '2.5rem' }}>
-            <InboxOutlined color='#fff' />
+            <InboxOutlined color="#fff" />
           </p>
-          <p style={{ fontSize: '1.6rem', fontWeight: 500 }}>上传封面</p>
-          <p style={{ fontSize: '0.8rem' }}>建议尺寸: 1303*734px</p>
+          <p style={{ fontSize: '1.6rem', fontWeight: 500 }}>{title ?? '上传封面'}</p>
+          <p style={{ fontSize: '0.8rem' }}>{subTitlt ?? '建议尺寸: 1303*734px'}</p>
         </div>
         {/* <img src={previewImage} alt='' className={styles['bt-preview']} /> */}
       </div>
