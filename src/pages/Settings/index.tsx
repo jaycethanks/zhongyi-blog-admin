@@ -2,32 +2,39 @@ import { Button, Form, Input, message } from 'antd';
 import React, { useEffect } from 'react';
 import FormItemDynamicList from '@/components/FormItemDynamicList';
 import FormItemUpload from '@/components/FormItemUpload';
-import {upsert as createAbout} from "@/services/api/settingAbout"
+import {upsert as createAbout,getAbout} from "@/services/api/settingAbout"
 const { TextArea } = Input;
 
-interface NewColumnModalProps {
-  open: boolean;
-  type: 'add' | 'edit';
-  onValidateFinish: (values: any) => void;
-  onModalClose: any;
-  initialValues?: API.Column;
-}
 
-const Setting: React.FC<NewColumnModalProps> = ({ onValidateFinish, initialValues }) => {
+
+const Setting: React.FC = () => {
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    if (initialValues === undefined) {
-      form.resetFields();
-    } else {
-      form.setFieldsValue(initialValues);
-    }
-  }, [initialValues]);
+  // useEffect(() => {
+  //   if (initialValues === undefined) {
+  //     form.resetFields();
+  //   } else {
+  //     form.setFieldsValue(initialValues);
+  //   }
+  // }, [initialValues]);
 
   const onFinishFailed = () => {
     console.warn('modal validate failed');
   };
-  const handleSave = async (type: 0 | 1) => {
+  const loadData = async ()=>{
+    const res = await getAbout()
+    if (res.code === 0) {
+      form.setFieldsValue(res.data);
+      
+      // const urlParams = new URL(window.location.href).searchParams;
+      // history.push(urlParams.get('redirect') || '/');
+    } else {
+      message.error(res.message);
+    }
+    
+  }
+  loadData()
+  const handleSave = async () => {
     await form.validateFields();
     const formValues = await form.getFieldsValue();
     const { avatar, msg, links } = formValues;

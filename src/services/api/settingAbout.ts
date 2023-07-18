@@ -13,3 +13,13 @@ export async function upsert(
     ...(options || {}),
   });
 }
+
+export async function getAbout() {
+  return request<{
+    code: number;
+    data:any;
+    message: string;
+  }>('/api/admin/about/getAbout', {
+    method: 'GET',
+  });
+}
