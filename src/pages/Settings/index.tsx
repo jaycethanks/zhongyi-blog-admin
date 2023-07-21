@@ -25,9 +25,6 @@ const Setting: React.FC = () => {
     const res = await getAbout()
     if (res.code === 0) {
       form.setFieldsValue(res.data);
-      
-      // const urlParams = new URL(window.location.href).searchParams;
-      // history.push(urlParams.get('redirect') || '/');
     } else {
       message.error(res.message);
     }

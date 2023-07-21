@@ -6,8 +6,8 @@ import axios, {
   type AxiosRequestConfig,
   type AxiosResponse,
   type AxiosError,
-} from '/home/jayce/Desktop/workspace/zhongyi-blog-admin/node_modules/axios';
-import useUmiRequest, { UseRequestProvider } from '/home/jayce/Desktop/workspace/zhongyi-blog-admin/node_modules/@ahooksjs/use-request';
+} from '/home/jayce/Desktop/workspace/zhongyi-blog-admin/node_modules/.pnpm/axios@0.27.2/node_modules/axios';
+import useUmiRequest, { UseRequestProvider } from '/home/jayce/Desktop/workspace/zhongyi-blog-admin/node_modules/.pnpm/@ahooksjs+use-request@2.8.15_react@17.0.2/node_modules/@ahooksjs/use-request';
 import { ApplyPluginsType } from 'umi';
 import { getPluginManager } from '../core/plugin';
 
@@ -26,7 +26,7 @@ import {
   PaginatedOptionsWithFormat,
   PaginatedParams,
   PaginatedResult,
-} from '/home/jayce/Desktop/workspace/zhongyi-blog-admin/node_modules/@ahooksjs/use-request/es/types';
+} from '/home/jayce/Desktop/workspace/zhongyi-blog-admin/node_modules/.pnpm/@ahooksjs+use-request@2.8.15_react@17.0.2/node_modules/@ahooksjs/use-request/es/types';
 
 type ResultWithData< T = any > = { data?: T; [key: string]: any };
 
