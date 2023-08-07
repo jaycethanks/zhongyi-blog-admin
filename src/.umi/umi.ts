@@ -5,7 +5,7 @@ import './core/polyfill';
 import '/home/jayce/Desktop/workspace_personal/blog/zhongyi-blog-admin/src/global.less';
 import '/home/jayce/Desktop/workspace_personal/blog/zhongyi-blog-admin/src/global.tsx';
 import 'antd/dist/antd.less';
-import { renderClient } from '/home/jayce/Desktop/workspace_personal/blog/zhongyi-blog-admin/node_modules/@umijs/preset-umi/node_modules/@umijs/renderer-react';
+import { renderClient } from '/home/jayce/Desktop/workspace_personal/blog/zhongyi-blog-admin/node_modules/.pnpm/@umijs+renderer-react@4.0.72_react-dom@18.1.0_react@18.1.0/node_modules/@umijs/renderer-react';
 import { getRoutes } from './core/route';
 import { createPluginManager } from './core/plugin';
 import { createHistory } from './core/history';
@@ -29,16 +29,25 @@ async function render() {
     },
   });
 
+  const contextOpts = pluginManager.applyPlugins({
+    key: 'modifyContextOpts',
+    type: ApplyPluginsType.modify,
+    initialValue: {},
+  });
+
+  const basename = contextOpts.basename || '/';
+  const historyType = contextOpts.historyType || 'browser';
+
+  const history = createHistory({
+    type: historyType,
+    basename,
+    ...contextOpts.historyOpts,
+  });
+
   return (pluginManager.applyPlugins({
     key: 'render',
     type: ApplyPluginsType.compose,
     initialValue() {
-      const contextOpts = pluginManager.applyPlugins({
-        key: 'modifyContextOpts',
-        type: ApplyPluginsType.modify,
-        initialValue: {},
-      });
-      const basename = contextOpts.basename || '/';
       const context = {
         routes,
         routeComponents,
@@ -46,12 +55,10 @@ async function render() {
         rootElement: contextOpts.rootElement || document.getElementById('root'),
         publicPath,
         runtimePublicPath,
-        history: createHistory({
-          type: contextOpts.historyType || 'browser',
-          basename,
-          ...contextOpts.historyOpts,
-        }),
+        history,
+        historyType,
         basename,
+        callback: contextOpts.callback,
       };
       const modifiedContext = pluginManager.applyPlugins({
         key: 'modifyClientRenderOpts',
@@ -67,5 +74,5 @@ async function render() {
 render();
 
 window.g_umi = {
-  version: '4.0.33',
+  version: '4.0.72',
 };

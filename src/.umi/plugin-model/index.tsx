@@ -3,7 +3,7 @@
 // DO NOT CHANGE IT MANUALLY!
 // @ts-ignore
 import type { models as rawModels } from '@@/plugin-model/model';
-import isEqual from '/home/jayce/Desktop/workspace_personal/blog/zhongyi-blog-admin/node_modules/fast-deep-equal/index.js';
+import isEqual from '/home/jayce/Desktop/workspace_personal/blog/zhongyi-blog-admin/node_modules/.pnpm/fast-deep-equal@3.1.3/node_modules/fast-deep-equal/index.js';
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 type Models = typeof rawModels;
@@ -163,6 +163,8 @@ export function useModel<N extends Namespaces, S>(
           : data;
         const previousState = stateRef.current;
         if (!isEqual(currentState, previousState)) {
+          // 避免 currentState 拿到的数据是老的，从而导致 isEqual 比对逻辑有问题
+          stateRef.current = currentState;
           setState(currentState);
         }
       }

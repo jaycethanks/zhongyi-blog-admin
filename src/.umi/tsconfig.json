@@ -2,8 +2,16 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "noEmit": true,
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "sourceMap": true,
@@ -19,7 +27,7 @@
         "src/.umi/*"
       ],
       "@umijs/max": [
-        "/home/jayce/Desktop/workspace_personal/blog/zhongyi-blog-admin/node_modules/umi"
+        "/home/jayce/Desktop/workspace_personal/blog/zhongyi-blog-admin/node_modules/.pnpm/umi@4.0.72_@babel+core@7.22.9_@types+react@17.0.62_eslint@8.35.0_postcss@8.4.26_prettier@2.8._eklxg3gjzdjxlcwp2cvhlkuq3m/node_modules/umi"
       ],
       "@umijs/max/typings": [
         "src/.umi/typings"

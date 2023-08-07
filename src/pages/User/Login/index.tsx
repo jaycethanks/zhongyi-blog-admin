@@ -88,8 +88,8 @@ const Login: React.FC = () => {
         subTitle={'Ant Design 是西湖区最具影响力的 Web 设计规范'} */}
         <LoginForm
           initialValues={{
-            account: 'jayce@example.com',
-            password: '1234',
+            account: '',
+            password: '',
           }}
           onFinish={async (values) => {
             await handleSubmit(values as API.LoginForm);
