@@ -10,6 +10,6 @@ export default defineConfig({
   define: {
     API_URL: '/', // API address
     API_SECRET_KEY: 'XXXXXXXXXXXXXXXX', // API call key
-    FILE_UPLOAD_URL: '/4567/file/upload',
+    FILE_UPLOAD_URL: '/api/file/upload',
   },
 });
