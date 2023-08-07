@@ -19,7 +19,7 @@
         "src/.umi/*"
       ],
       "@umijs/max": [
-        "/home/jayce/Desktop/workspace_personal/zhongyi-blog-admin/node_modules/umi"
+        "/home/jayce/Desktop/workspace_personal/blog/zhongyi-blog-admin/node_modules/umi"
       ],
       "@umijs/max/typings": [
         "src/.umi/typings"

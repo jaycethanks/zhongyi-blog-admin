@@ -24,7 +24,7 @@ export async function getRoutes() {
 '15': React.lazy(() => import(/* webpackChunkName: "p__Settings__index" */'@/pages/Settings/index.tsx')),
 '16': React.lazy(() => import( './EmptyRoute')),
 '17': React.lazy(() => import(/* webpackChunkName: "p__404" */'@/pages/404.tsx')),
-'ant-design-pro-layout': React.lazy(() => import(/* webpackChunkName: "t__plugin-layout__Layout" */'/home/jayce/Desktop/workspace_personal/zhongyi-blog-admin/src/.umi-production/plugin-layout/Layout.tsx')),
+'ant-design-pro-layout': React.lazy(() => import(/* webpackChunkName: "t__plugin-layout__Layout" */'/home/jayce/Desktop/workspace_personal/blog/zhongyi-blog-admin/src/.umi-production/plugin-layout/Layout.tsx')),
 },
   };
 }
