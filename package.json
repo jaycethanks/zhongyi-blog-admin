@@ -29,7 +29,8 @@
     "start:test": "cross-env REACT_APP_ENV=test MOCK=none UMI_ENV=dev max dev",
     "test:e2e": "node ./tests/run-tests.js",
     "tsc": "tsc --noEmit",
-    "docker:build": "docker build -t zhongyi-blog-admin ."
+    "docker:build": "docker stop zhongyi-blog-admin;docker rm zhongyi-blog-admin;docker rmi zhongyi-blog-admin-img; docker build -t zhongyi-blog-admin-img --network zhongyi-blog-server_app-net .",
+    "docker:run": "docker run -d -p 7777:80 --name zhongyi-blog-admin --network zhongyi-blog-server_app-net  zhongyi-blog-admin-img"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
